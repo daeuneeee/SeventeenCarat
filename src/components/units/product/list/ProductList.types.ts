@@ -6,14 +6,15 @@ import {
 } from "../../../../commons/types/generated/types";
 
 export interface IBoardListUIProps {
-  data?: Pick<IQuery, "fetchBoards">;
+  data?: Pick<IQuery, "fetchUseditems">;
   onClickMoveToRegister: () => void;
-  result: Pick<IQuery, "fetchBoardsOfTheBest">;
+  result?: Pick<IQuery, "fetchUseditemsOfTheBest">;
   refetch: (
     variables?: Partial<IQueryFetchBoardsArgs> | undefined
-  ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoards">>>;
+  ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchUseditems">>>;
   count?: number;
   onClickSearch: () => void;
   onChangeSearch: (event: ChangeEvent<HTMLInputElement>) => void;
   keyword: string;
+  onLoadMore: () => void;
 }

@@ -14,6 +14,8 @@ import {
 import { ChangeEvent, useState } from "react";
 
 export default function BoardList() {
+  const router = useRouter();
+
   const [search, setSearch] = useState("");
   const [keyword, setKeyword] = useState("");
 
@@ -22,8 +24,9 @@ export default function BoardList() {
     IQueryFetchBoardsArgs
   >(FETCH_BOARDS);
 
-  const { data: result } = useQuery(FETCH_BOARDS_BEST);
-  const router = useRouter();
+  const { data: result } =
+    useQuery<Pick<IQuery, "fetchBoardsOfTheBest">>(FETCH_BOARDS_BEST);
+
   const { data: dataBoardsCount } = useQuery<
     Pick<IQuery, "fetchBoardsCount">,
     IQueryFetchBoardsCountArgs
@@ -36,15 +39,10 @@ export default function BoardList() {
   const onClickSearch = async () => {
     setKeyword(search);
     await refetch({ search, page: 1 });
-
-    // setSearch(event.target.id);
   };
-
-  console.log();
 
   const onChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
-    // setKeyword(event.target.value);
   };
 
   return (

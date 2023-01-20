@@ -1,7 +1,8 @@
 import PickTrueSvg from "../../../commons/svg/picktrue";
 import * as S from "../../../../commons/styles/myPageStyles";
+import { IUploadUIProps } from "./UploadPage.types";
 
-export default function UploadUI({ data }) {
+export default function UploadUI({ data }: IUploadUIProps) {
   return (
     <>
       <S.Wrapper>
@@ -10,7 +11,7 @@ export default function UploadUI({ data }) {
             <S.ImgBox
               style={{
                 backgroundImage:
-                  `url(https://storage.googleapis.com/${SoldItemsMap.images[0]})`.replaceAll(
+                  `url(https://storage.googleapis.com/${SoldItemsMap.images?.[0]})`.replaceAll(
                     " ",
                     "%20"
                   ),
@@ -28,7 +29,7 @@ export default function UploadUI({ data }) {
                 <S.InformBoxBottom>
                   <S.SellerBox>
                     <S.SellerImg></S.SellerImg>
-                    <S.SellerName>{SoldItemsMap.seller.name}</S.SellerName>
+                    <S.SellerName>{SoldItemsMap.seller?.name}</S.SellerName>
                   </S.SellerBox>
                   <S.PickCountBox>
                     <S.PickSvgBox>

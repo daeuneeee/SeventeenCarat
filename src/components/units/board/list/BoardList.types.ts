@@ -8,7 +8,7 @@ import {
 export interface IBoardListUIProps {
   data?: Pick<IQuery, "fetchBoards">;
   onClickMoveToRegister: () => void;
-  result: Pick<IQuery, "fetchBoardsOfTheBest">;
+  result?: Pick<IQuery, "fetchBoardsOfTheBest">;
   refetch: (
     variables?: Partial<IQueryFetchBoardsArgs> | undefined
   ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoards">>>;

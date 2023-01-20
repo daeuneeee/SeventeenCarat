@@ -29,7 +29,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [zipCode, setZipCode] = useState("");
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
-  // const [images, setImages] = useState("");
 
   const [writerError, setWriterError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -201,7 +200,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   };
 
-  const onChangeContents = (value) => {
+  const onChangeContents = (value: string) => {
     setContents(value);
     if (value !== "") {
       setContentsError("");

@@ -19,9 +19,13 @@ export default function ProductList() {
   const [search, setSearch] = useState("");
   const [keyword, setKeyword] = useState("");
 
-  const { data, refetch, fetchMore } = useQuery(FETCH_USED_ITEMS);
+  const { data, refetch, fetchMore } =
+    useQuery<Pick<IQuery, "fetchUseditems">>(FETCH_USED_ITEMS);
 
-  const { data: result } = useQuery(FETCH_USED_ITEM_OF_THE_BEST);
+  const { data: result } = useQuery<Pick<IQuery, "fetchUseditemsOfTheBest">>(
+    FETCH_USED_ITEM_OF_THE_BEST
+  );
+
   const { data: dataBoardsCount } = useQuery<
     Pick<IQuery, "fetchBoardsCount">,
     IQueryFetchBoardsCountArgs

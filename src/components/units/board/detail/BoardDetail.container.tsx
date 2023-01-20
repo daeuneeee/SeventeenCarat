@@ -11,6 +11,7 @@ import {
 import { useMutation, useQuery } from "@apollo/client";
 import { Modal } from "antd";
 import {
+  IMutation,
   IQuery,
   IQueryFetchBoardCommentsArgs,
 } from "../../../../commons/types/generated/types";
@@ -18,9 +19,11 @@ import {
 export default function BoardDetail() {
   const [address, setAddress] = useState(false);
 
-  const [likeBoard] = useMutation(LIKE_BOARD);
-  const [dislikeBoard] = useMutation(DISLIKE_BOARD);
-  const [deleteBoard] = useMutation(DELETE_BOARD);
+  const [likeBoard] = useMutation<Pick<IMutation, "likeBoard">>(LIKE_BOARD);
+  const [dislikeBoard] =
+    useMutation<Pick<IMutation, "dislikeBoard">>(DISLIKE_BOARD);
+  const [deleteBoard] =
+    useMutation<Pick<IMutation, "deleteBoard">>(DELETE_BOARD);
 
   const onClickAddressBtn = () => {
     setAddress((address) => !address);

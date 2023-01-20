@@ -1,7 +1,8 @@
 import PickTrueSvg from "../../../commons/svg/picktrue";
 import * as S from "../../../../commons/styles/myPageStyles";
+import { IPickedUiProps } from "./PickedPage.types";
 
-export default function PickedUI({ data }) {
+export default function PickedUI({ data }: IPickedUiProps) {
   return (
     <>
       <S.Wrapper>
@@ -10,7 +11,7 @@ export default function PickedUI({ data }) {
             <S.ImgBox
               style={{
                 backgroundImage:
-                  `url(https://storage.googleapis.com/${pickListMap.images[0]})`.replaceAll(
+                  `url(https://storage.googleapis.com/${pickListMap.images?.[0]})`.replaceAll(
                     " ",
                     "%20"
                   ),
@@ -28,7 +29,7 @@ export default function PickedUI({ data }) {
                 <S.InformBoxBottom>
                   <S.SellerBox>
                     <S.SellerImg></S.SellerImg>
-                    <S.SellerName>{pickListMap.seller.name}</S.SellerName>
+                    <S.SellerName>{pickListMap.seller?.name}</S.SellerName>
                   </S.SellerBox>
                   <S.PickCountBox>
                     <S.PickSvgBox>

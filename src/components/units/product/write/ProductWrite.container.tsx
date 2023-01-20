@@ -14,7 +14,6 @@ import {
 } from "../../../../commons/types/generated/types";
 import { UPLOAD_FILE } from "../../board/write/BoardWrite.queries";
 import { FETCH_USED_ITEM } from "../detail/ProductDetail.queries";
-// import { useEffect } from "react";
 
 const schema = yup.object({
   name: yup.string().required("상품명을 입력해주세요"),
@@ -24,8 +23,6 @@ const schema = yup.object({
     .number()
     .required("가격을 입력해주세요")
     .typeError("숫자로 적어주세요"),
-  // tags: yup.array().string().required("태그를 입력해주세요"),
-  // address: yup.string().required("우편번호를 검색해주세요"),
 });
 
 export default function ProductWrite(props) {

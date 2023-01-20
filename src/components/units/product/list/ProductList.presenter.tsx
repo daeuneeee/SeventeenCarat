@@ -1,20 +1,16 @@
-// import { getDate } from "../../../../commons/libraries/utils";
 import Link from "next/link";
 import * as S from "./ProductList.styles";
 import PenSvg from "../../../commons/svg/pen";
-import LikeSvg from "../../../commons/svg/like";
 import { IBoardListUIProps } from "./ProductList.types";
 import { DatePicker, Space } from "antd";
 import styled from "@emotion/styled";
 import InfiniteScroll from "react-infinite-scroller";
 import InfiniteProduct from "../../../commons/infiniteProductList";
 import VisitedProducts from "../../../commons/vistedProducts";
-// import Paginations01 from "../../../commons/paginations/01/Pagenations01.container";
 import { v4 as uuidV4 } from "uuid";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { accessTokenState, isUpdateState } from "../../../../commons/store";
 import PickSvg from "../../../commons/svg/picktrue";
-// import { IBoard } from "../../../../commons/types/generated/types";
 
 const { RangePicker } = DatePicker;
 
@@ -29,25 +25,19 @@ export default function ProductListUI({
   data,
   onClickMoveToRegister,
   result,
-  refetch,
-  count,
   onClickSearch,
   onChangeSearch,
-  keyword,
   onLoadMore,
 }: IBoardListUIProps) {
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
-  const [isUpdate, setIsUpdate] = useRecoilState(isUpdateState);
+  const accessToken = useRecoilValue(accessTokenState);
+  const setIsUpdate = useSetRecoilState(isUpdateState);
 
-  const onClickProduct = (product) => () => {
-    // 1. 기존 장바구니 가져오기
+  const onClickProduct = (product: any) => () => {
     const products = JSON.parse(localStorage.getItem("products") ?? "[]");
 
-    // 2. 이미 담겼는지 확인하기
-    const temp = products.filter((el) => el._id === product._id);
+    const temp = products.filter((el: any) => el._id === product._id);
     if (temp.length === 1) return;
 
-    // 3. 해당 장바구니에 담기
     products.unshift(product);
     if (products.length > 5) {
       products.pop();
@@ -124,11 +114,6 @@ export default function ProductListUI({
               placeholder="제목을 검색해주세요."
               onChange={onChangeSearch}
             />
-            {/* <S.BodyDateBox>
-              <Space direction="vertical" size={12}>
-                <RangePickerStyle />
-              </Space>
-            </S.BodyDateBox> */}
             <S.BodySearch onClick={onClickSearch}>검색하기</S.BodySearch>
           </S.BodyTop>
           <div style={{ width: "1220px", height: "800px", overflow: "auto" }}>
@@ -139,31 +124,6 @@ export default function ProductListUI({
               hasMore={true || false}
             >
               <S.BodyListBox>
-                {/* {data?.fetchBoards.map((el, index) => (
-            <S.BodyContentsList key={el._id}>
-              <S.ListNumber>{index + 1}</S.ListNumber>
-              <Link href={`boards/${el._id}`}>
-                <S.ListTitle>
-                  {el.title
-                    .replaceAll(keyword, `!@#@${keyword}!@#@`)
-                    .split("!@#@")
-                    .map((word) => (
-                      <span
-                        key={uuidV4()}
-                        style={{
-                          color: word === keyword ? "#F8CACC" : "",
-                        }}
-                      >
-                        {word}
-                      </span>
-                    ))}
-                </S.ListTitle>
-              </Link>
-              <S.ListWriter>{el.writer}</S.ListWriter>
-              <S.ListDate>{getDate(el.createdAt)}</S.ListDate>
-            </S.BodyContentsList>
-          ))} */}
-
                 {data?.fetchUseditems.map((el, index) => (
                   <InfiniteProduct key={uuidV4()} el={el} index={index} />
                 ))}

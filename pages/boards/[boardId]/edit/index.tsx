@@ -29,7 +29,7 @@ export default function Freeboard() {
   const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
     FETCH_BOARD,
     {
-      variables: { boardId: router.query.boardId },
+      variables: { boardId: String(router.query.boardId) },
     }
   );
 

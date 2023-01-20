@@ -4,7 +4,7 @@ import { Address } from "react-daum-postcode";
 
 export interface IBoardWriteProps {
   isEdit: boolean;
-  data: Pick<IQuery, "fetchBoard">;
+  data?: Pick<IQuery, "fetchBoard">;
 }
 
 export interface IBoardWriteUIProps {
@@ -14,7 +14,7 @@ export interface IBoardWriteUIProps {
   passwordError: string;
   onChangeTitle: (event: ChangeEvent<HTMLInputElement>) => void;
   titleError: string;
-  onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChangeContents: (value: string) => void;
   contentsError: string;
   onChangeZipCode: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeAddress: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -42,6 +42,7 @@ export interface IBoardWriteUIProps {
   imgUrl1: string;
   imgUrl2: string;
   imgUrl3: string;
+  contents: string;
 }
 
 export interface IMyVariablesProps {

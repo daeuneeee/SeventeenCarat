@@ -5,7 +5,6 @@ import { Modal } from "antd";
 import "react-quill/dist/quill.snow.css";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
-  console.log(props.contents);
   return (
     <S.Wrapper>
       <S.Header>게시물 {props.isEdit ? "수정" : "등록"}</S.Header>

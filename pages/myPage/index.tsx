@@ -1,11 +1,13 @@
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useAuth } from "../../src/components/commons/hooks/useAuth";
 
 export default function myPage() {
   useAuth();
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/myPage/uploadPage");
+  }, []);
 
-  return (
-    <>
-      <div>마이페이지입니다</div>
-    </>
-  );
+  return <></>;
 }

@@ -1,7 +1,8 @@
 import PickTrueSvg from "../../../commons/svg/picktrue";
 import * as S from "../../../../commons/styles/myPageStyles";
+import { IBoughtUIProps } from "./BoughtPage.types";
 
-export default function BoughtUI({ data }) {
+export default function BoughtUI({ data }: IBoughtUIProps) {
   return (
     <>
       <S.Wrapper>
@@ -10,7 +11,7 @@ export default function BoughtUI({ data }) {
             <S.ImgBox
               style={{
                 backgroundImage:
-                  `url(https://storage.googleapis.com/${boughtItemsMap.images[0]})`.replaceAll(
+                  `url(https://storage.googleapis.com/${boughtItemsMap.images?.[0]})`.replaceAll(
                     " ",
                     "%20"
                   ),
@@ -28,7 +29,7 @@ export default function BoughtUI({ data }) {
                 <S.InformBoxBottom>
                   <S.SellerBox>
                     <S.SellerImg></S.SellerImg>
-                    <S.SellerName>{boughtItemsMap.seller.name}</S.SellerName>
+                    <S.SellerName>{boughtItemsMap.seller?.name}</S.SellerName>
                   </S.SellerBox>
                   <S.PickCountBox>
                     <S.PickSvgBox>
