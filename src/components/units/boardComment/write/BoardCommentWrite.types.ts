@@ -8,8 +8,12 @@ export interface IBoardCommentWriteUIProps {
   writer: string;
   password: string;
   onClickComment: () => void;
-  // onChangeValue: any;
-  // value: number;
   rating: number;
   onChangeRating: (value: number) => void;
+  isAsk: boolean;
+  onClickAsk: () => void;
+}
+
+export interface IBoardCommentWriteProps {
+  isAsk: boolean;
 }

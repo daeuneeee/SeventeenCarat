@@ -2,11 +2,11 @@ import { Fragment } from "react";
 import XSvg from "../../../commons/svg/x";
 import { getDate } from "../../../../commons/libraries/utils";
 import * as S from "../list/ProductCommentList.styles";
-import { IBoardCommentListUIProps } from "./BoardCommentList.types";
 import UserCommentSvg from "../../../commons/svg/usercomment";
 import NestedCommentWrite from "../../productNestedComment/write/NestedCommentWrite.container";
 import NestedCommentSvg from "../../../commons/svg/nestedComment";
 import NestedCommentList from "../../productNestedComment/list/NestedCommentList.container";
+import { IProductCommentListUIProps } from "./ProductCommentList.types";
 
 export default function ProductCommentListUI({
   onClickCommentUpdate,
@@ -23,7 +23,8 @@ export default function ProductCommentListUI({
   index,
   onClickNestedComment,
   isNestedComment,
-}: IBoardCommentListUIProps) {
+  data,
+}: IProductCommentListUIProps) {
   return (
     <>
       <S.ComWrapper>
@@ -58,7 +59,7 @@ export default function ProductCommentListUI({
               </S.ComContentsBox>
             </>
           ) : (
-            <S.ComContentsListBox id={el.writer}>
+            <S.ComContentsListBox>
               <S.ComContentsListUserBox>
                 <UserCommentSvg></UserCommentSvg>
                 <S.ComContentsListUserDiv>
@@ -115,7 +116,9 @@ export default function ProductCommentListUI({
       ) : (
         <></>
       )}
-      <NestedCommentList el={el} />
+      {data?.fetchUseditemQuestionAnswers.map((answersMap) => (
+        <NestedCommentList el={el} answersMap={answersMap} />
+      ))}
     </>
   );
 }

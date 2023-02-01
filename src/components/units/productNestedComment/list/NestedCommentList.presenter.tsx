@@ -2,8 +2,8 @@ import { Fragment } from "react";
 import XSvg from "../../../commons/svg/x";
 import { getDate } from "../../../../commons/libraries/utils";
 import * as S from "./NestedCommentList.styles";
-import { IBoardCommentListUIProps } from "./BoardCommentList.types";
 import UserCommentSvg from "../../../commons/svg/usercomment";
+import { INestedCommentListUIProps } from "./NestedCommentList.types";
 
 export default function NestedCommentListUI({
   nestedCommentId,
@@ -17,8 +17,7 @@ export default function NestedCommentListUI({
   onClickUpdate,
   editContents,
   onChangeEditContents,
-}: IBoardCommentListUIProps) {
-  console.log(editContents);
+}: INestedCommentListUIProps) {
   return (
     <>
       <S.ComWrapper>

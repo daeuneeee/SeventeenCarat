@@ -1,25 +1,33 @@
 import { useRouter } from "next/router";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { ChangeEvent, MouseEvent, useState } from "react";
 
 import "antd/dist/antd.css";
 
 import {
   DELETE_USED_ITEM_QUESTION,
+  FETCH_QUESTION_ANSWERS,
   UPDATE_USED_ITEM_QUESTION,
 } from "./ProductCommentList.queries";
 import { Modal } from "antd";
-import { IBoardCommentListProps } from "./BoardCommentList.types";
 import ProductCommentListUI from "./ProductCommentList.presenter";
 import { FETCH_USED_ITEM_QUESTIONS } from "../../product/detail/ProductDetail.queries";
 import { useRecoilState } from "recoil";
 import { isNestedCommentState } from "../../../../commons/store";
+import {
+  IMyVariables,
+  IProductCommentListProps,
+} from "./ProductCommentList.types";
+import {
+  IMutation,
+  IQuery,
+  IQueryFetchUseditemQuestionAnswersArgs,
+} from "../../../../commons/types/generated/types";
 
 export default function ProductCommentList({
   el,
   index,
-  comments,
-}: IBoardCommentListProps) {
+}: IProductCommentListProps) {
   const router = useRouter();
   const [commentId, setCommentId] = useState("");
   const [editContents, setEditContents] = useState("");
@@ -27,11 +35,21 @@ export default function ProductCommentList({
     useRecoilState(isNestedCommentState);
 
   const [isEdit, setIsEdit] = useState(false);
-
   const [deleteComment, setDeleteComment] = useState(false);
 
-  const [deleteUseditemQuestion] = useMutation(DELETE_USED_ITEM_QUESTION);
-  const [updateUseditemQuestion] = useMutation(UPDATE_USED_ITEM_QUESTION);
+  const [deleteUseditemQuestion] = useMutation<
+    Pick<IMutation, "deleteUseditemQuestion">
+  >(DELETE_USED_ITEM_QUESTION);
+  const [updateUseditemQuestion] = useMutation<
+    Pick<IMutation, "updateUseditemQuestion">
+  >(UPDATE_USED_ITEM_QUESTION);
+
+  const { data } = useQuery<
+    Pick<IQuery, "fetchUseditemQuestionAnswers">,
+    IQueryFetchUseditemQuestionAnswersArgs
+  >(FETCH_QUESTION_ANSWERS, {
+    variables: { useditemQuestionId: el._id },
+  });
 
   const onClickUpdateBtn = (event: MouseEvent<HTMLButtonElement>) => {
     setIsEdit((prev) => !prev);
@@ -44,7 +62,7 @@ export default function ProductCommentList({
     setIsEdit(false);
   };
 
-  const onClickNestedComment = (event) => {
+  const onClickNestedComment = (event: MouseEvent<HTMLDivElement>) => {
     setIsNestedComment((prev) => !prev);
     setCommentId(event.currentTarget.id);
   };
@@ -59,7 +77,7 @@ export default function ProductCommentList({
 
   const onClickCommentUpdate = async () => {
     try {
-      const myVariables = {
+      const myVariables: IMyVariables = {
         useditemQuestionId: commentId,
       };
       if (editContents) {
@@ -118,7 +136,7 @@ export default function ProductCommentList({
       index={index}
       onClickNestedComment={onClickNestedComment}
       isNestedComment={isNestedComment}
-      comments={comments}
+      data={data}
     />
   );
 }

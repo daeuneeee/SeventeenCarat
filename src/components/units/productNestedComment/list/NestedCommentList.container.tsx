@@ -1,35 +1,43 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { Modal } from "antd";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
+import { IMutation } from "../../../../commons/types/generated/types";
+import { FETCH_QUESTION_ANSWERS } from "../../productComment/list/ProductCommentList.queries";
 
 import NestedCommentListUI from "./NestedCommentList.presenter";
 import {
   DELETE_QUESTION_ANSWER,
-  FETCH_QUESTION_ANSWERS,
   UPDATE_QUESTION_ANSWER,
 } from "./NestedCommentList.queries";
+import {
+  IMyVariables,
+  INestedCommentListProps,
+} from "./NestedCommentList.types";
 
-export default function NestedCommentList({ el }: IBoardCommentListProps) {
+export default function NestedCommentList({
+  el,
+  answersMap,
+}: INestedCommentListProps) {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [nestedCommentId, setNestedCommentId] = useState("");
-  const { data } = useQuery(FETCH_QUESTION_ANSWERS, {
-    variables: { useditemQuestionId: el._id },
-  });
-
-  const [updateQuestionAnswer] = useMutation(UPDATE_QUESTION_ANSWER);
-
   const [editContents, setEditContents] = useState("");
-  const [deleteQuestionAnswer] = useMutation(DELETE_QUESTION_ANSWER);
 
-  const onClickDeleteBtn = (event) => {
+  const [updateQuestionAnswer] = useMutation<
+    Pick<IMutation, "updateUseditemQuestionAnswer">
+  >(UPDATE_QUESTION_ANSWER);
+
+  const [deleteQuestionAnswer] = useMutation<
+    Pick<IMutation, "deleteUseditemQuestionAnswer">
+  >(DELETE_QUESTION_ANSWER);
+
+  const onClickDeleteBtn = (event: MouseEvent<HTMLButtonElement>) => {
     setIsDelete((prev) => !prev);
     setIsEdit(false);
     setNestedCommentId(event.currentTarget.id);
   };
 
-  const onClickUpdateBtn = (event) => {
+  const onClickUpdateBtn = (event: MouseEvent<HTMLButtonElement>) => {
     setIsEdit((prev) => !prev);
     setIsDelete(false);
     setNestedCommentId(event.currentTarget.id);
@@ -37,7 +45,7 @@ export default function NestedCommentList({ el }: IBoardCommentListProps) {
 
   const onClickUpdate = async () => {
     try {
-      const myVariables = {
+      const myVariables: IMyVariables = {
         useditemQuestionAnswerId: nestedCommentId,
       };
       if (editContents) {
@@ -91,21 +99,19 @@ export default function NestedCommentList({ el }: IBoardCommentListProps) {
 
   return (
     <>
-      {data?.fetchUseditemQuestionAnswers.map((answersMap) => (
-        <NestedCommentListUI
-          key={answersMap._id}
-          answersMap={answersMap}
-          isDelete={isDelete}
-          onClickDeleteBtn={onClickDeleteBtn}
-          nestedCommentId={nestedCommentId}
-          onClickDelete={onClickDelete}
-          onClickUpdateBtn={onClickUpdateBtn}
-          isEdit={isEdit}
-          onClickCancelBtn={onClickCancelBtn}
-          onChangeEditContents={onChangeEditContents}
-          onClickUpdate={onClickUpdate}
-        />
-      ))}
+      <NestedCommentListUI
+        answersMap={answersMap}
+        isDelete={isDelete}
+        onClickDeleteBtn={onClickDeleteBtn}
+        nestedCommentId={nestedCommentId}
+        onClickDelete={onClickDelete}
+        onClickUpdateBtn={onClickUpdateBtn}
+        isEdit={isEdit}
+        onClickCancelBtn={onClickCancelBtn}
+        onChangeEditContents={onChangeEditContents}
+        onClickUpdate={onClickUpdate}
+        editContents={editContents}
+      />
     </>
   );
 }

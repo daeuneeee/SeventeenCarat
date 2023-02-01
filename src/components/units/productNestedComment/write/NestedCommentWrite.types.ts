@@ -1,15 +1,12 @@
 import { ChangeEvent } from "react";
+import { IUseditemQuestion } from "../../../../commons/types/generated/types";
 
-export interface IBoardCommentWriteUIProps {
-  onChangeWriter: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
+export interface INestedCommentWriteUIProps {
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   contents: string;
-  writer: string;
-  password: string;
-  onClickComment: () => void;
-  // onChangeValue: any;
-  // value: number;
-  rating: number;
-  onChangeRating: (value: number) => void;
+  onClickAnswer: () => void;
+}
+
+export interface INestedCommentWriteProps {
+  el: IUseditemQuestion;
 }

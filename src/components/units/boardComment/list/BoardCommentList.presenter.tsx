@@ -31,7 +31,7 @@ export default function BoardCommentListUI({
               <S.ComUserBox>
                 <S.ComUserName
                   placeholder="작성자"
-                  defaultValue={el.writer}
+                  defaultValue={el.writer || ""}
                   disabled
                 />
                 <S.ComUserPassword
@@ -66,7 +66,7 @@ export default function BoardCommentListUI({
               </S.ComContentsBox>
             </>
           ) : (
-            <S.ComContentsListBox id={el.writer}>
+            <S.ComContentsListBox id={el.writer || ""}>
               <S.ComContentsListUserBox>
                 <UserCommentSvg></UserCommentSvg>
                 <S.ComContentsListUserDiv>
@@ -111,7 +111,7 @@ export default function BoardCommentListUI({
                 <S.ComUserBox>
                   <S.ComUserName
                     placeholder="작성자"
-                    defaultValue={el.writer}
+                    defaultValue={el.writer || ""}
                     disabled
                   />
                   <S.ComUserPassword

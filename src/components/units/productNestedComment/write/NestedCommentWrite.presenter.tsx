@@ -1,12 +1,12 @@
 import * as S from "./NestedCommentWrite.styles";
 import CommentSvg from "../../../commons/svg/comment";
-import { IBoardCommentWriteUIProps } from "./NestedCommentWrite.types";
+import { INestedCommentWriteUIProps } from "./NestedCommentWrite.types";
 
 export default function NestedCommentWriteUI({
   onChangeContents,
   contents,
   onClickAnswer,
-}: IBoardCommentWriteUIProps) {
+}: INestedCommentWriteUIProps) {
   return (
     <>
       <S.CommentsWrapper>

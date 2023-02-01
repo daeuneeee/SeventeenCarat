@@ -1,9 +1,15 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { useRecoilState } from "recoil";
 import { accessTokenState } from "../../../../commons/store";
+import {
+  IMutation,
+  IQuery,
+  IQueryFetchUseditemArgs,
+  IQueryFetchUseditemQuestionsArgs,
+} from "../../../../commons/types/generated/types";
 import { FETCH_USER_LOGGED_IN } from "../../layout/header/LayoutHeader.queries";
 import { FETCH_USED_ITEM_OF_THE_BEST } from "../list/ProductList.queries";
 import ProductDetailUI from "./ProductDetail.presenter";
@@ -22,23 +28,35 @@ export default function ProductDetail() {
 
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 
-  const { data } = useQuery(FETCH_USED_ITEM, {
+  const { data } = useQuery<
+    Pick<IQuery, "fetchUseditem">,
+    IQueryFetchUseditemArgs
+  >(FETCH_USED_ITEM, {
     variables: {
-      useditemId: router.query.productId,
+      useditemId: String(router.query.productId),
     },
   });
-  const sellerID = data?.fetchUseditem.seller._id;
+  const sellerID = data?.fetchUseditem.seller?._id;
 
-  const { data: userLoggedIn } = useQuery(FETCH_USER_LOGGED_IN);
+  const { data: userLoggedIn } =
+    useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
   const loggedInId = userLoggedIn?.fetchUserLoggedIn._id;
 
-  const [pickedItem] = useMutation(PICKED_ITEM);
-  const [deleteUsedItem] = useMutation(DELETE_USED_ITEM);
-  const [buyingSelling] = useMutation(BUYING_SELLING);
+  const [pickedItem] =
+    useMutation<Pick<IMutation, "toggleUseditemPick">>(PICKED_ITEM);
+  const [deleteUsedItem] =
+    useMutation<Pick<IMutation, "deleteUseditem">>(DELETE_USED_ITEM);
+  const [buyingSelling] =
+    useMutation<Pick<IMutation, "createPointTransactionOfBuyingAndSelling">>(
+      BUYING_SELLING
+    );
 
-  const { data: comments, fetchMore } = useQuery(FETCH_USED_ITEM_QUESTIONS, {
+  const { data: comments, fetchMore } = useQuery<
+    Pick<IQuery, "fetchUseditemQuestions">,
+    IQueryFetchUseditemQuestionsArgs
+  >(FETCH_USED_ITEM_QUESTIONS, {
     variables: {
-      useditemId: router.query.productId,
+      useditemId: String(router.query.productId),
     },
   });
 
@@ -55,8 +73,8 @@ export default function ProductDetail() {
     });
   };
 
-  const onClickImg = (event) => {
-    setChangeImg(event.target.id);
+  const onClickImg = (event: MouseEvent<HTMLDivElement>) => {
+    setChangeImg(event.currentTarget.id);
   };
 
   const onClickUpdate = () => {

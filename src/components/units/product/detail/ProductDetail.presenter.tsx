@@ -11,6 +11,7 @@ import PickTrueSvg from "../../../commons/svg/picktrue";
 import PickFalseSvg from "../../../commons/svg/pickfalse";
 import MapsWriteAndDetail from "../../../commons/map/writeAndDetail";
 import { v4 as uuidV4 } from "uuid";
+import { IProductDetailUIProps } from "./ProductDetail.types";
 
 export default function ProductDetailUI({
   data,
@@ -22,11 +23,10 @@ export default function ProductDetailUI({
   loggedInId,
   sellerID,
   onClickPick,
-  isPicked,
   onClickBuying,
   onClickImg,
   changeImg,
-}) {
+}: IProductDetailUIProps) {
   return (
     <>
       <S.Wrapper>
@@ -37,7 +37,7 @@ export default function ProductDetailUI({
               <S.ProductAndDateBox>
                 <S.ProductName>{data?.fetchUseditem.name}</S.ProductName>
                 <S.SellerAndDateBox>
-                  <S.Seller>{data?.fetchUseditem.seller.name}</S.Seller>
+                  <S.Seller>{data?.fetchUseditem.seller?.name}</S.Seller>
                   <S.CreatedAt>
                     {getDate(data?.fetchUseditem.createdAt)}
                   </S.CreatedAt>
@@ -73,7 +73,7 @@ export default function ProductDetailUI({
                           " ",
                           "%20"
                         )
-                      : `url(https://storage.googleapis.com/${data?.fetchUseditem.images[0]})`.replaceAll(
+                      : `url(https://storage.googleapis.com/${data?.fetchUseditem.images?.[0]})`.replaceAll(
                           " ",
                           "%20"
                         ),
@@ -87,7 +87,7 @@ export default function ProductDetailUI({
                     onClick={onClickImg}
                     style={{
                       backgroundImage:
-                        `url(https://storage.googleapis.com/${data?.fetchUseditem.images[0]})`.replaceAll(
+                        `url(https://storage.googleapis.com/${data?.fetchUseditem.images?.[0]})`.replaceAll(
                           " ",
                           "%20"
                         ),
@@ -95,13 +95,13 @@ export default function ProductDetailUI({
                       backgroundPosition: "center center",
                       backgroundSize: "contain",
                     }}
-                    id={data?.fetchUseditem.images[0]}
+                    id={data?.fetchUseditem.images?.[0]}
                   ></S.ListImg>
                   <S.ListImg
                     onClick={onClickImg}
                     style={{
                       backgroundImage:
-                        `url(https://storage.googleapis.com/${data?.fetchUseditem.images[1]})`.replaceAll(
+                        `url(https://storage.googleapis.com/${data?.fetchUseditem.images?.[1]})`.replaceAll(
                           " ",
                           "%20"
                         ),
@@ -109,13 +109,13 @@ export default function ProductDetailUI({
                       backgroundPosition: "center center",
                       backgroundSize: "contain",
                     }}
-                    id={data?.fetchUseditem.images[1]}
+                    id={data?.fetchUseditem.images?.[1]}
                   ></S.ListImg>
                   <S.ListImg
                     onClick={onClickImg}
                     style={{
                       backgroundImage:
-                        `url(https://storage.googleapis.com/${data?.fetchUseditem.images[2]})`.replaceAll(
+                        `url(https://storage.googleapis.com/${data?.fetchUseditem.images?.[2]})`.replaceAll(
                           " ",
                           "%20"
                         ),
@@ -123,22 +123,8 @@ export default function ProductDetailUI({
                       backgroundPosition: "center center",
                       backgroundSize: "contain",
                     }}
-                    id={data?.fetchUseditem.images[2]}
+                    id={data?.fetchUseditem.images?.[2]}
                   ></S.ListImg>
-                  {/* <S.ListImg
-                    onClick={onClickImg}
-                    style={{
-                      backgroundImage:
-                        `url(https://storage.googleapis.com/${data?.fetchUseditem.images[3]})`.replaceAll(
-                          " ",
-                          "%20"
-                        ),
-                      backgroundRepeat: "no-repeat",
-                      backgroundPosition: "center center",
-                      backgroundSize: "contain",
-                    }}
-                    id={data?.fetchUseditem.images[3]}
-                  ></S.ListImg> */}
                 </S.ListImgBox>
               </S.ImgBox>
             </S.ImgBoxFlex>
@@ -146,14 +132,16 @@ export default function ProductDetailUI({
             {typeof window !== "undefined" ? (
               <S.Contents
                 dangerouslySetInnerHTML={{
-                  __html: Dompurify.sanitize(data?.fetchUseditem.contents),
+                  __html: Dompurify.sanitize(
+                    String(data?.fetchUseditem.contents)
+                  ),
                 }}
               ></S.Contents>
             ) : (
               <S.Contents></S.Contents>
             )}
             <S.TagBox>
-              {data?.fetchUseditem.tags.map((tagMap) => (
+              {data?.fetchUseditem.tags?.map((tagMap) => (
                 <S.Tags key={uuidV4()}>#{tagMap.replaceAll(",", "")}</S.Tags>
               ))}
             </S.TagBox>
@@ -162,10 +150,10 @@ export default function ProductDetailUI({
           <S.Footer>
             <S.AddressBox>
               <S.Address>
-                {data?.fetchUseditem.useditemAddress.address}
+                {data?.fetchUseditem.useditemAddress?.address}
               </S.Address>
               <S.AddressDetail>
-                {data?.fetchUseditem.useditemAddress.addressDetail}
+                {data?.fetchUseditem.useditemAddress?.addressDetail}
               </S.AddressDetail>
             </S.AddressBox>
             <S.Map>
@@ -193,14 +181,7 @@ export default function ProductDetailUI({
       >
         {comments ? (
           comments?.fetchUseditemQuestions.map((el, index) => {
-            return (
-              <ProductCommentList
-                key={el._id}
-                el={el}
-                index={index}
-                comments={comments}
-              />
-            );
+            return <ProductCommentList key={el._id} el={el} index={index} />;
           })
         ) : (
           <></>

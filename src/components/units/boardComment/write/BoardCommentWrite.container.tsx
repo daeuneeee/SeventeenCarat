@@ -9,8 +9,9 @@ import {
 import { useRouter } from "next/router";
 import { Modal } from "antd";
 import { FETCH_USED_ITEM_QUESTIONS } from "../../product/detail/ProductDetail.queries";
+import { IBoardCommentWriteProps } from "./BoardCommentWrite.types";
 
-export default function BoardCommentWrite(props) {
+export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
   const router = useRouter();
   const [contents, setContents] = useState("");
   const [writer, setWriter] = useState("");
@@ -19,8 +20,6 @@ export default function BoardCommentWrite(props) {
 
   const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
   const [createUseditemQuestion] = useMutation(CREATE_USED_ITEM_QUESTION);
-
-  // const { data: comments } = useQuery(FETCH_USED_ITEM_QUESTIONS);
 
   const onClickAsk = async () => {
     if (contents === "") {

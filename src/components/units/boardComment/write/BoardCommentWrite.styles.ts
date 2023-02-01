@@ -54,7 +54,7 @@ export const ComUserName = styled.input`
   outline-color: #f8cacc;
   border-radius: 5px;
   &::placeholder {
-    color: black;
+    color: #bdbdbd;
     font-size: 1.6rem;
     font-weight: 500;
   }
@@ -77,7 +77,7 @@ export const ComUserPassword = styled.input`
   font-size: 1.6rem;
   border-radius: 5px;
   &::placeholder {
-    color: black;
+    color: #bdbdbd;
     font-size: 1.6rem;
     font-weight: 500;
   }

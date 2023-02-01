@@ -2,18 +2,22 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import ProductWriteUI from "./ProductWrite.presenter";
-import { CREATE_USED_ITEM, UPDATE_USED_ITEM } from "./ProductWrite.queries";
+import {
+  CREATE_USED_ITEM,
+  UPDATE_USED_ITEM,
+  UPLOAD_FILE,
+} from "./ProductWrite.queries";
 import "react-quill/dist/quill.snow.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useEffect, useState } from "react";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Modal } from "antd";
 import {
   IMutation,
   IMutationUploadFileArgs,
 } from "../../../../commons/types/generated/types";
-import { UPLOAD_FILE } from "../../board/write/BoardWrite.queries";
 import { FETCH_USED_ITEM } from "../detail/ProductDetail.queries";
+import { IAddress, IData, IProductWriteProps } from "./ProductWrite.types";
 
 const schema = yup.object({
   name: yup.string().required("상품명을 입력해주세요"),
@@ -25,7 +29,7 @@ const schema = yup.object({
     .typeError("숫자로 적어주세요"),
 });
 
-export default function ProductWrite(props) {
+export default function ProductWrite(props: IProductWriteProps) {
   const router = useRouter();
   const { data } = useQuery(FETCH_USED_ITEM, {
     variables: { useditemId: router.query.productId },
@@ -33,10 +37,9 @@ export default function ProductWrite(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [address, setAddress] = useState("");
   const [zipCode, setZipCode] = useState("");
-  const [imageUrls, setImageUrls] = useState(["", "", "", ""]);
-  const [editImageUrls, setEditImageUrls] = useState(["", "", "", ""]);
-  const [files, setFiles] = useState<File[] | undefined[]>([
-    undefined,
+  const [imageUrls, setImageUrls] = useState(["", "", ""]);
+  const [editImageUrls, setEditImageUrls] = useState(["", "", ""]);
+  const [files, setFiles] = useState<(File | undefined)[]>([
     undefined,
     undefined,
     undefined,
@@ -46,30 +49,12 @@ export default function ProductWrite(props) {
     handleSubmit,
     setValue,
     trigger,
-    // reset,
     formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
-    // defaultValues: {
-    //   name: props.data?.fetchUseditem.name,
-    //   remarks: props.data?.fetchUseditem.remarks,
-    //   price: props.data?.fetchUseditem.price,
-    //   tags: props.data?.fetchUseditem.tags,
-    //   contents: props.data?.fetchUseditem.contents,
-    //   lat: props.data?.fetchUseditem.useditemAddress.lat,
-    //   lng: props.data?.fetchUseditem.useditemAddress.lng,
-    // },
     resolver: yupResolver(schema),
   });
 
-  // useEffect(() => {
-  //   const defaultValue = {};
-  //   defaultValue.name = props.data?.fetchUseditem.name;
-  //   defaultValue.remarks = props.data?.fetchUseditem.remarks;
-  //   defaultValue.price = props.data?.fetchUseditem.price;
-  //   defaultValue.tags = props.data?.fetchUseditem.tags;
-  //   reset({ ...defaultValue });
-  // }, []);
   useEffect(() => {
     setValue("name", data?.fetchUseditem.name);
     setValue("remarks", data?.fetchUseditem.remarks);
@@ -84,44 +69,18 @@ export default function ProductWrite(props) {
       "useditemAddress.address",
       data?.fetchUseditem.useditemAddress.address
     );
+
     setValue(
       "useditemAddress.zipcode",
       data?.fetchUseditem.useditemAddress.zipcode
     );
 
-    // setEditImageUrls((prev) => {
-    //   if (prev[0] === "") {
-    //     prev[0] = data?.fetchUseditem.images?.[0];
-    //   }
-    //   if (prev[1] === "") {
-    //     prev[1] = data?.fetchUseditem.images?.[1];
-    //   }
-    //   if (prev[2] === "") {
-    //     prev[2] = data?.fetchUseditem.images?.[2];
-    //   }
-    //   if (prev[3] === "") {
-    //     prev[3] = data?.fetchUseditem.images?.[3];
-    //   }
-    //   const newState = [...prev];
-    //   return newState;
-    // });
-    // console.log(data?.fetchUseditem.images);
     setEditImageUrls(data?.fetchUseditem.images);
-    // if (imageUrls[0] === "") {
-    //   setImageUrls([data?.fetchUseditem.images[0],"","",""]);
-    // }
-    // if (imageUrls[1] === "") {
-    //   return data?.fetchUseditem.images[1];
-    // }
-    // if (imageUrls[2] === "") {
-    //   return data?.fetchUseditem.images[2];
-    // }
-    // if (imageUrls[3] === "") {
-    //   return data?.fetchUseditem.images[3];
-    // }
   }, [data]);
-  const [createUsedItem] = useMutation(CREATE_USED_ITEM);
-  const [updateUsedItem] = useMutation(UPDATE_USED_ITEM);
+  const [createUsedItem] =
+    useMutation<Pick<IMutation, "createUseditem">>(CREATE_USED_ITEM);
+  const [updateUsedItem] =
+    useMutation<Pick<IMutation, "updateUseditem">>(UPDATE_USED_ITEM);
   const [uploadFile] = useMutation<
     Pick<IMutation, "uploadFile">,
     IMutationUploadFileArgs
@@ -131,17 +90,15 @@ export default function ProductWrite(props) {
     setIsOpen((prev) => !prev);
   };
 
-  const handleComplete = (address) => {
+  const handleComplete = (address: IAddress) => {
     onToggleModal();
     setValue("useditemAddress.zipcode", address.zonecode);
     setValue("useditemAddress.address", address.address);
     setAddress(address.address);
     setZipCode(address.zonecode);
-
-    // setZipCode(address.zoneCode);
   };
 
-  const onClickRegister = async (data) => {
+  const onClickRegister = async (data: IData) => {
     console.log(data);
     try {
       const results = await Promise.all(
@@ -155,9 +112,6 @@ export default function ProductWrite(props) {
       data.tags = data.tags.split("#");
       data.tags.shift();
 
-      // data.useditemAddress.lat = Number(data.useditemAddress.lat);
-      // data.useditemAddress.lng = Number(data.useditemAddress.lng);
-
       const result = await createUsedItem({
         variables: {
           createUseditemInput: data,
@@ -170,7 +124,7 @@ export default function ProductWrite(props) {
           });
         },
       });
-      await router.push(`/products/${result.data.createUseditem._id}`);
+      await router.push(`/products/${result.data?.createUseditem._id}`);
     } catch (error) {
       if (error instanceof Error) {
         Modal.error({ content: error.message });
@@ -178,33 +132,22 @@ export default function ProductWrite(props) {
     }
   };
 
-  const onClickUpdate = async (data) => {
+  const onClickUpdate = async (data: IData) => {
     const fileDatas = [...editImageUrls];
-    // console.log(fileDatas);
 
     try {
       const results = await Promise.all(
         files.map((el) => (el ? uploadFile({ variables: { file: el } }) : ""))
       );
 
-      // const resultUrls = results.map((urlsMap) =>
-      //   urlsMap ? urlsMap.data?.uploadFile.url : ""
-      // );
-
       const updateDatas = results.map((el, index) => {
         return el ? el.data?.uploadFile.url : fileDatas[index];
       });
 
-      // console.log(updateDatas);
       data.images = updateDatas;
       data.price = Number(data.price);
-      data.tags = data.tags.join(",").split(",");
+      data.tags = data.tags.split("#");
       console.log(data);
-
-      // data.tags = data.tags.split("#");
-
-      // data.useditemAddress.lat = Number(data.useditemAddress.lat);
-      // data.useditemAddress.lng = Number(data.useditemAddress.lng);
 
       const result = await updateUsedItem({
         variables: {
@@ -219,7 +162,7 @@ export default function ProductWrite(props) {
           });
         },
       });
-      await router.push(`/products/${result.data.updateUseditem._id}`);
+      await router.push(`/products/${result.data?.updateUseditem._id}`);
     } catch (error) {
       if (error instanceof Error) {
         Modal.error({ content: error.message });
@@ -231,34 +174,40 @@ export default function ProductWrite(props) {
     void router.push(`/products/${router.query.productId}`);
   };
 
-  const onChangeContents = (value) => {
+  const onChangeContents = (value: string) => {
     setValue("contents", value);
     void trigger("contents");
   };
 
-  const onChangeFile = (index: number) => (event) => {
-    const file = event.target.files[0];
-    const fileReader = new FileReader();
+  const onChangeFile =
+    (index: number) => (event: ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
 
-    fileReader.readAsDataURL(file);
+      if (file === null) return;
+      const fileReader = new FileReader();
 
-    fileReader.onload = (event) => {
-      const tempUrls = [...imageUrls];
-      tempUrls[index] = event.target.result;
-      setImageUrls(tempUrls);
+      if (file) fileReader.readAsDataURL(file);
 
-      const tempFiles = [...files];
-      tempFiles[index] = file;
-      setFiles(tempFiles);
+      fileReader.onload = (event) => {
+        const tempUrls = [...imageUrls];
+
+        tempUrls[index] = String(event.target?.result);
+        setImageUrls(tempUrls);
+
+        const tempFiles = [...files];
+        tempFiles[index] = file;
+
+        setFiles(tempFiles);
+      };
     };
-  };
+
+  console.log(errors);
 
   return (
     <ProductWriteUI
       register={register}
       handleSubmit={handleSubmit}
       onClickRegister={onClickRegister}
-      setValue={setValue}
       onClickCancel={onClickCancel}
       onChangeContents={onChangeContents}
       isEdit={props.isEdit}

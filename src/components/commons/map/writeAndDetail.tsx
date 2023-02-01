@@ -1,12 +1,19 @@
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { addressState } from "../../../commons/store";
+import { useEffect } from "react";
+import { IQuery } from "../../../commons/types/generated/types";
 
 declare const window: typeof globalThis & {
   kakao: any;
 };
 
-export default function MapsWriteAndDetail({ address, data }) {
+interface IMapsWriteAndDetailProps {
+  address?: string;
+  data?: Pick<IQuery, "fetchUseditem">;
+}
+
+export default function MapsWriteAndDetail({
+  address,
+  data,
+}: IMapsWriteAndDetailProps) {
   useEffect(() => {
     const script = document.createElement("script");
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&libraries=services&appkey=${String(
@@ -33,8 +40,8 @@ export default function MapsWriteAndDetail({ address, data }) {
         marker.setMap(map);
         // 주소로 좌표를 검색합니다
         geocoder.addressSearch(
-          address || data?.fetchUseditem.useditemAddress.address,
-          function (result, status) {
+          address || data?.fetchUseditem.useditemAddress?.address,
+          function (result: any, status: any) {
             // 정상적으로 검색이 완료됐으면
             if (status === window.kakao.maps.services.Status.OK) {
               const coords = new window.kakao.maps.LatLng(
@@ -47,13 +54,6 @@ export default function MapsWriteAndDetail({ address, data }) {
                 map,
                 position: coords,
               });
-
-              // 인포윈도우로 장소에 대한 설명을 표시합니다
-              // const infowindow = new window.kakao.maps.InfoWindow({
-              //   content:
-              //     '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>',
-              // });
-              // infowindow.open(map, marker);
 
               // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
               map.setCenter(coords);

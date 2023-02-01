@@ -3,14 +3,14 @@ import { ChangeEvent, useState } from "react";
 import NestedCommentWriteUI from "./NestedCommentWrite.presenter";
 import { CREATE_QUESTION_ANSWER } from "./NestedCommentWrite.queries";
 import { isNestedCommentState } from "../../../../commons/store";
-import { useRecoilState } from "recoil";
-import { FETCH_QUESTION_ANSWERS } from "../list/NestedCommentList.queries";
+import { useSetRecoilState } from "recoil";
+import { FETCH_QUESTION_ANSWERS } from "../../productComment/list/ProductCommentList.queries";
+import { INestedCommentWriteProps } from "./NestedCommentWrite.types";
 
-export default function NestedCommentWrite({ el }) {
+export default function NestedCommentWrite({ el }: INestedCommentWriteProps) {
   const [contents, setContents] = useState("");
   const [createQuestionAnswer] = useMutation(CREATE_QUESTION_ANSWER);
-  const [isNestedComment, setIsNestedComment] =
-    useRecoilState(isNestedCommentState);
+  const setIsNestedComment = useSetRecoilState(isNestedCommentState);
 
   const onClickAnswer = async () => {
     const result = await createQuestionAnswer({

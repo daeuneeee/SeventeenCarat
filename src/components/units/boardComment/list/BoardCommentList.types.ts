@@ -28,9 +28,7 @@ export interface IBoardCommentListUIProps {
 export interface IMyVariables {
   boardCommentId: string;
   password: string;
-  // contents: string;
-  // rating: string;
-  updateBoardCommentInput: { contents: string; rating: number };
+  updateBoardCommentInput?: { contents?: string; rating?: number };
 }
 
 export interface IBoardCommentListProps {

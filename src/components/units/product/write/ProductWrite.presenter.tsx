@@ -6,12 +6,12 @@ import "react-quill/dist/quill.snow.css";
 import { Modal } from "antd";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import MapsWriteAndDetail from "../../../commons/map/writeAndDetail";
+import { IProductWriteUIProps } from "./ProductWrite.types";
 
 export default function ProductWriteUI({
   register,
   handleSubmit,
   onClickRegister,
-  setValue,
   onClickCancel,
   onChangeContents,
   isEdit,
@@ -27,9 +27,7 @@ export default function ProductWriteUI({
   imageUrls,
   editImageUrls,
   onClickUpdate,
-}) {
-  const [latLng, setLatLng] = useRecoilState(mapLatLngState);
-
+}: IProductWriteUIProps) {
   return (
     <form onSubmit={handleSubmit(isEdit ? onClickUpdate : onClickRegister)}>
       <S.Wrapper>
@@ -81,19 +79,13 @@ export default function ProductWriteUI({
               register={register("tags")}
               defaultValue={data?.fetchUseditem.tags}
             />
-            <S.Error>{errors.tags?.message}</S.Error>
           </S.InputBox>
         </div>
         <S.Body>
           <S.GpsAddressBox>
             <S.Label>거래위치</S.Label>
             <S.MapImg>
-              <MapsWriteAndDetail
-                setValue={setValue}
-                data={data}
-                isEdit={isEdit}
-                address={address}
-              />
+              <MapsWriteAndDetail data={data} address={address} />
             </S.MapImg>
           </S.GpsAddressBox>
           <S.GpsAddressBox>
@@ -103,7 +95,11 @@ export default function ProductWriteUI({
                 <S.ZipCode
                   {...register("useditemAddress.zipcode")}
                   placeholder="00000"
-                  value={zipCode || data?.fetchUseditem.useditemAddress.zipcode}
+                  value={
+                    zipCode ||
+                    data?.fetchUseditem.useditemAddress?.zipcode ||
+                    ""
+                  }
                   readOnly
                 />
                 <S.ZipCodeBtn type="button" onClick={onToggleModal}>
@@ -113,7 +109,6 @@ export default function ProductWriteUI({
                   <Modal
                     title="주소검색"
                     visible={isOpen}
-                    // onOk={onToggleModal}
                     onCancel={onToggleModal}
                     footer={null}
                   >
@@ -121,7 +116,6 @@ export default function ProductWriteUI({
                   </Modal>
                 )}
               </S.LatLngBox>
-              <S.Error>{errors.lat?.message}</S.Error>
             </S.GpsBox>
             <S.AddressBox>
               <S.Label>주소</S.Label>
@@ -130,7 +124,11 @@ export default function ProductWriteUI({
                   type="text"
                   {...register("useditemAddress.address")}
                   readOnly
-                  value={address || data?.fetchUseditem.useditemAddress.address}
+                  value={
+                    address ||
+                    data?.fetchUseditem.useditemAddress?.address ||
+                    ""
+                  }
                 />
                 <S.AddressInput
                   type="text"
@@ -206,19 +204,6 @@ export default function ProductWriteUI({
               style={{ display: "none" }}
               id="img04"
             />
-            {imageUrls?.[3] || editImageUrls?.[3] ? (
-              <S.Img
-                htmlFor="img04"
-                style={{
-                  backgroundImage: imageUrls[3]
-                    ? `url(${imageUrls?.[3]})`
-                    : `url(https://storage.googleapis.com/${editImageUrls?.[3]})`,
-                  backgroundSize: "cover",
-                }}
-              ></S.Img>
-            ) : (
-              <S.Img htmlFor="img04">+</S.Img>
-            )}
           </S.ImgBox>
           <S.MainImgBox>
             <S.Label>메인 사진 설정</S.Label>
