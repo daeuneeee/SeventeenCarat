@@ -1,13 +1,23 @@
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { FieldValues, UseFormSetValue } from "react-hook-form";
+import { useSetRecoilState } from "recoil";
 import { mapLatLngState } from "../../../commons/store";
+import { IUseditem } from "../../../commons/types/generated/types";
 
 declare const window: typeof globalThis & {
   kakao: any;
 };
 
-export default function Maps({ setValue, data, isEdit }) {
-  const [latLng, setLatLng] = useRecoilState(mapLatLngState);
+interface IMapsProps {
+  setValue: UseFormSetValue<FieldValues>;
+  data?: {
+    fetchUseditem: IUseditem;
+  };
+  isEdit: boolean;
+}
+
+export default function Maps({ setValue, data, isEdit }: IMapsProps) {
+  const setLatLng = useSetRecoilState(mapLatLngState);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -21,8 +31,8 @@ export default function Maps({ setValue, data, isEdit }) {
         const mapContainer = document.getElementById("map"); // 지도를 표시할 div
         const mapOption = {
           center: new window.kakao.maps.LatLng(
-            isEdit ? data?.fetchUseditem.useditemAddress.lat : 33.450701,
-            isEdit ? data?.fetchUseditem.useditemAddress.lng : 126.570667
+            isEdit ? data?.fetchUseditem.useditemAddress?.lat : 33.450701,
+            isEdit ? data?.fetchUseditem.useditemAddress?.lng : 126.570667
           ), // 지도의 중심좌표
           level: 3, // 지도의 확대 레벨
         };
@@ -42,7 +52,7 @@ export default function Maps({ setValue, data, isEdit }) {
         window.kakao.maps.event.addListener(
           map,
           "click",
-          function (mouseEvent) {
+          function (mouseEvent: any) {
             // 클릭한 위도, 경도 정보를 가져옵니다
             const latlng = mouseEvent.latLng;
             // 마커 위치를 클릭한 위치로 옮깁니다

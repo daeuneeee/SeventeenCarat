@@ -10,10 +10,10 @@ export interface IBoardCommentWriteUIProps {
   onClickComment: () => void;
   rating: number;
   onChangeRating: (value: number) => void;
-  isAsk: boolean;
+  isAsk?: boolean;
   onClickAsk: () => void;
 }
 
 export interface IBoardCommentWriteProps {
-  isAsk: boolean;
+  isAsk?: boolean;
 }

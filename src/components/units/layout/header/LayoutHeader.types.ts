@@ -15,4 +15,5 @@ export interface ILayoutHeaderUIProps {
   onClickMyPage: () => void;
   onClickLogOut: () => void;
   onClickPoint: () => void;
+  isPointCharging: boolean;
 }

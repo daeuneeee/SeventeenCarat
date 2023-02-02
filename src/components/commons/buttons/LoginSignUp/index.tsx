@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { string } from "yup";
 
 export const LoginBtn = styled.button`
   width: 75%;
@@ -12,7 +13,11 @@ export const LoginBtn = styled.button`
   cursor: pointer;
 `;
 
-export default function LoginSignUpButton(props) {
+interface ILoginSignUpButton {
+  title: string;
+}
+
+export default function LoginSignUpButton(props: ILoginSignUpButton) {
   return (
     <>
       <LoginBtn>{props.title}</LoginBtn>

@@ -2,8 +2,6 @@ import Link from "next/link";
 import * as S from "./ProductList.styles";
 import PenSvg from "../../../commons/svg/pen";
 import { IBoardListUIProps } from "./ProductList.types";
-import { DatePicker, Space } from "antd";
-import styled from "@emotion/styled";
 import InfiniteScroll from "react-infinite-scroller";
 import InfiniteProduct from "../../../commons/infiniteProductList";
 import VisitedProducts from "../../../commons/vistedProducts";
@@ -11,15 +9,7 @@ import { v4 as uuidV4 } from "uuid";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { accessTokenState, isUpdateState } from "../../../../commons/store";
 import PickSvg from "../../../commons/svg/picktrue";
-
-const { RangePicker } = DatePicker;
-
-const RangePickerStyle = styled(RangePicker)`
-  border: none;
-  :focus-within {
-    box-shadow: none;
-  }
-`;
+import { IUseditem } from "../../../../commons/types/generated/types";
 
 export default function ProductListUI({
   data,
@@ -32,10 +22,10 @@ export default function ProductListUI({
   const accessToken = useRecoilValue(accessTokenState);
   const setIsUpdate = useSetRecoilState(isUpdateState);
 
-  const onClickProduct = (product: any) => () => {
+  const onClickProduct = (product: IUseditem) => () => {
     const products = JSON.parse(localStorage.getItem("products") ?? "[]");
 
-    const temp = products.filter((el: any) => el._id === product._id);
+    const temp = products.filter((el: IUseditem) => el._id === product._id);
     if (temp.length === 1) return;
 
     products.unshift(product);
@@ -124,8 +114,8 @@ export default function ProductListUI({
               hasMore={true || false}
             >
               <S.BodyListBox>
-                {data?.fetchUseditems.map((el, index) => (
-                  <InfiniteProduct key={uuidV4()} el={el} index={index} />
+                {data?.fetchUseditems.map((el) => (
+                  <InfiniteProduct key={uuidV4()} el={el} />
                 ))}
               </S.BodyListBox>
             </InfiniteScroll>

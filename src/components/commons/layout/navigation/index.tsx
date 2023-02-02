@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import axios from "axios";
-import { useRecoilState } from "recoil";
+import { MouseEvent } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { imgState } from "../../../../commons/store";
 
 const API_KEY = "63303c4f06ee7aca62351f20";
@@ -30,10 +31,6 @@ const Profiles = styled.div`
   height: 70%;
 `;
 
-// const SvtImg = styled.img`
-//   width: 100%;
-// `;
-
 const BtnContainer = styled.img`
   width: 100%;
   height: 100%;
@@ -61,10 +58,10 @@ const NavigationAPI = [
 ];
 
 export default function LayoutNavigationPage() {
-  const [imgData, setImgData] = useRecoilState(imgState);
+  const setImgData = useSetRecoilState(imgState);
 
-  async function getImage(event) {
-    const url = `https://backend.brian-hong.tech/image?api_key=${API_KEY}&name=${event.target.id}`;
+  async function getImage(event: MouseEvent<HTMLImageElement>) {
+    const url = `https://backend.brian-hong.tech/image?api_key=${API_KEY}&name=${event.currentTarget.id}`;
     console.log(url);
     const result = await axios.get(url);
     setImgData(result.data.img);

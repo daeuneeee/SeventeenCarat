@@ -1,49 +1,54 @@
 import styled from "@emotion/styled";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { visitedProductState } from "../../../commons/store";
 import { v4 as uuidV4 } from "uuid";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { MouseEvent } from "react";
+import { IUseditem } from "../../../commons/types/generated/types";
 
 export default function VisitedProducts() {
   const router = useRouter();
-  const [visitedProduct, setVisitedProduct] =
-    useRecoilState(visitedProductState);
-  const onClickToList = async (event: MouseEvent<HTMLButtonElement>) => {
+  const visitedProduct = useRecoilValue(visitedProductState);
+  const onClickToList = async (event: MouseEvent<HTMLDivElement>) => {
     await router.push(`/products/${event.currentTarget.id}`);
   };
 
+  console.log(visitedProduct);
+
   return (
     <>
-      <ProductBox>
-        <Span>최근 본 상품</Span>
-        <ProductMiddleBox>
-          {visitedProduct?.map((el) => (
-            <Product
-              id={el._id}
-              onClick={onClickToList}
-              key={uuidV4()}
-              style={{
-                backgroundImage:
-                  `url(https://storage.googleapis.com/${el.images?.[0]})`.replaceAll(
-                    " ",
-                    "%20"
-                  ),
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center center",
-                backgroundSize: "cover",
-              }}
-            ></Product>
-          ))}
-        </ProductMiddleBox>
-      </ProductBox>
+      {visitedProduct.length !== 0 ? (
+        <ProductBox>
+          <Span>최근 본 상품</Span>
+          <ProductMiddleBox>
+            {visitedProduct?.map((el: IUseditem) => (
+              <Product
+                id={el._id}
+                onClick={onClickToList}
+                key={uuidV4()}
+                style={{
+                  backgroundImage:
+                    `url(https://storage.googleapis.com/${el.images?.[0]})`.replaceAll(
+                      " ",
+                      "%20"
+                    ),
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center center",
+                  backgroundSize: "cover",
+                }}
+              ></Product>
+            ))}
+          </ProductMiddleBox>
+        </ProductBox>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
 
 export const ProductBox = styled.div`
   width: 10%;
-  /* height: 80%; */
   position: fixed;
   top: 15%;
   right: 3%;
@@ -54,9 +59,6 @@ export const ProductBox = styled.div`
   flex-direction: column;
   background: #eee;
   border-radius: 20px;
-  /* display: none; */
-  /* border: 2px solid transparent;
-  border-image: linear-gradient(to right, #f8cacc, #8da4d0) 1; */
 `;
 
 export const Span = styled.div`

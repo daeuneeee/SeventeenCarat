@@ -1,10 +1,11 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
 import Script from "next/script";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { isPointChargingState } from "../../../commons/store";
+import { IMutation, IQuery } from "../../../commons/types/generated/types";
 import { FETCH_USER_LOGGED_IN } from "../../units/layout/header/LayoutHeader.queries";
 import { useAuth } from "../hooks/useAuth";
 
@@ -24,35 +25,34 @@ declare const window: typeof globalThis & {
 
 export default function PointChargingPage() {
   useAuth();
-  const { data, refetch } = useQuery(FETCH_USER_LOGGED_IN);
+  const { data } =
+    useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
   const [point, setPoint] = useState(0);
   const [isPointCharging, setIsPointCharging] =
     useRecoilState(isPointChargingState);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<{ point: string }>();
 
-  const [chargePoint] = useMutation(CHARGE_POINT);
+  const [chargePoint] =
+    useMutation<Pick<IMutation, "createPointTransactionOfLoading">>(
+      CHARGE_POINT
+    );
 
-  // useEffect(() => {
-  //   void refetch();
-  // }, []);
   const onClickWrapper = () => {
     setIsPointCharging((prev) => !prev);
   };
 
-  const onChangePoint = (event) => {
-    setPoint(event.target.value);
+  const onChangePoint = (event: ChangeEvent<HTMLSelectElement>) => {
+    setPoint(Number(event.target.value));
   };
 
-  const onClickCharge = (data) => {
+  const onClickCharge = (data: { point: string }) => {
     const IMP = window.IMP; // 생략 가능
     IMP.init("imp49910675");
-    // setPoint(data.point);
     IMP.request_pay(
       {
         // param
         pg: "nice",
         pay_method: "card",
-        // merchant_uid: "ORD20180131-0000011",
         name: "포인트충전",
         amount: data.point,
         buyer_email: "gildong@gmail.com",
@@ -61,8 +61,9 @@ export default function PointChargingPage() {
         buyer_addr: "서울특별시 강남구 신사동",
         buyer_postcode: "01181",
       },
-      async function (rsp) {
+      async function (rsp: any) {
         // callback
+        console.log(rsp);
         if (rsp.success) {
           await chargePoint({
             variables: {
@@ -112,7 +113,7 @@ export default function PointChargingPage() {
           <AfterCharging>
             충전 후 포인트:{" "}
             {String(
-              Number(data.fetchUserLoggedIn.userPoint.amount) + Number(point)
+              Number(data?.fetchUserLoggedIn.userPoint?.amount) + Number(point)
             ).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,")}{" "}
             P
           </AfterCharging>

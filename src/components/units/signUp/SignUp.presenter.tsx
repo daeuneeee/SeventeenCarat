@@ -1,6 +1,7 @@
 import LoginSignUpButton from "../../commons/buttons/LoginSignUp";
 import LoginSignUpInput from "../../commons/inputs/LoginSignUp";
 import * as S from "../signUp/SignUp.styles";
+import { ISignUpUIProps } from "./SignUp.types";
 
 export default function SignUpUI({
   isActiveSignUp,
@@ -10,7 +11,7 @@ export default function SignUpUI({
   handleSubmit,
   errors,
   onClickLogin,
-}) {
+}: ISignUpUIProps) {
   return (
     <form onSubmit={handleSubmit(onClickSignUp)}>
       {isActiveSignUp && <S.Wrapper onClick={onClickWrapper}></S.Wrapper>}

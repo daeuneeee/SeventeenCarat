@@ -10,7 +10,7 @@ export default function Paginations01(props: IPaginations01Props) {
 
   const onClickPage = (event: MouseEvent<HTMLButtonElement>) => {
     void props.refetch({ page: Number(event.currentTarget.id) });
-    setIsActive(Number(event.target.value));
+    setIsActive(Number(event.currentTarget.value));
   };
 
   const onClickPrev = () => {

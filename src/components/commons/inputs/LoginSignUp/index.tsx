@@ -1,4 +1,10 @@
 import styled from "@emotion/styled";
+import {
+  FieldValues,
+  UseFormRegister,
+  UseFormRegisterReturn,
+} from "react-hook-form";
+import { IData } from "../../../units/login/Login.types";
 
 export const InputStyle = styled.input`
   width: 100%;
@@ -14,7 +20,13 @@ export const InputStyle = styled.input`
   }
 `;
 
-export default function LoginSignUpInput(props) {
+interface ILoginSignUpInputProps {
+  type: string;
+  placeholder: string;
+  register: UseFormRegisterReturn;
+}
+
+export default function LoginSignUpInput(props: ILoginSignUpInputProps) {
   return (
     <>
       <InputStyle

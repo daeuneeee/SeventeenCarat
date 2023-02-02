@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import { MouseEvent } from "react";
 import myPage from "../../../../../pages/myPage";
 
 export default function LayoutNavigationSubPage() {
@@ -11,7 +12,7 @@ export default function LayoutNavigationSubPage() {
     { id: "/pickedPage", name: "찜한 상품" },
   ];
 
-  const onClickLink = (event) => {
+  const onClickLink = (event: MouseEvent<HTMLHeadingElement>) => {
     void router.push(`/myPage${event.currentTarget.id}`);
   };
 

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
+import { MouseEvent } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { isActiveLoginBoxState } from "../../../commons/store";
 import LayoutBannerPage from "./banner";
 import LayoutFooterPage from "./footer";
@@ -12,7 +13,7 @@ interface ILayoutProps {
 }
 
 export default function Layout(props: ILayoutProps) {
-  const [isActive, setIsActive] = useRecoilState(isActiveLoginBoxState);
+  const setIsActive = useSetRecoilState(isActiveLoginBoxState);
 
   const router = useRouter();
 
@@ -40,10 +41,9 @@ export default function Layout(props: ILayoutProps) {
   const isShowNavigation = SHOW_NAVIGATIONS.includes(router.asPath);
   const isShowNavigationSub = SHOW_NAVIGATIONSUBS.includes(router.asPath);
 
-  const onClickCancel = (event) => {
-    if (event.target.className.baseVal !== "carat") {
-      setIsActive(false);
-    }
+  const onClickCancel = (event: MouseEvent<HTMLDivElement>) => {
+    if (event.target.className.baseVal !== "carat") setIsActive(false);
+    console.log(event.currentTarget.className);
   };
 
   return (

@@ -39,7 +39,7 @@ export default function ProductWriteUI({
               placeholder="상품명을 작성해주세요."
               type="text"
               register={register("name")}
-              defaultValue={data?.fetchUseditem.name}
+              defaultValue={data?.fetchUseditem.name || ""}
             />
             <S.Error>{errors.name?.message}</S.Error>
           </S.InputBox>
@@ -49,7 +49,7 @@ export default function ProductWriteUI({
               placeholder="한줄요약을 작성해주세요."
               type="text"
               register={register("remarks")}
-              defaultValue={data?.fetchUseditem.remarks}
+              defaultValue={data?.fetchUseditem.remarks || ""}
             />
             <S.Error>{errors.remarks?.message}</S.Error>
           </S.InputBox>
@@ -67,7 +67,8 @@ export default function ProductWriteUI({
             <WriteInput
               placeholder="가격을 입력해주세요."
               register={register("price")}
-              defaultValue={data?.fetchUseditem.price}
+              type="number"
+              defaultValue={data?.fetchUseditem.price || ""}
             />
             <S.Error>{errors.price?.message}</S.Error>
           </S.InputBox>
@@ -77,7 +78,7 @@ export default function ProductWriteUI({
               placeholder="태그를 입력해주세요."
               type="text"
               register={register("tags")}
-              defaultValue={data?.fetchUseditem.tags}
+              defaultValue={data?.fetchUseditem.tags || ""}
             />
           </S.InputBox>
         </div>

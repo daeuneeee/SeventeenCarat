@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
 import { useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   isActiveLoginState,
   isActiveSignUpState,
@@ -14,6 +14,7 @@ import SignUpUI from "./SignUp.presenter";
 import { CREATE_USER } from "./SignUp.queries";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { IData } from "./SignUp.types";
 
 const schema = yup.object({
   email: yup.string().required("아이디를 입력해주세요."),
@@ -30,9 +31,9 @@ export default function SignUp() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm<IData>({ resolver: yupResolver(schema) });
 
-  const [isActiveLogin, setIsActiveLogin] = useRecoilState(isActiveLoginState);
+  const setIsActiveLogin = useSetRecoilState(isActiveLoginState);
   const [isActiveSignUp, setIsActiveSignUp] =
     useRecoilState(isActiveSignUpState);
 
@@ -45,9 +46,8 @@ export default function SignUp() {
     setIsActiveSignUp((isActiveSignUp) => !isActiveSignUp);
   };
 
-  const onClickSignUp = async (data) => {
+  const onClickSignUp = async (data: IData) => {
     const { passwordCheck, ...rest } = data;
-    console.log(rest);
     try {
       await createUser({
         variables: {

@@ -1,4 +1,9 @@
 import styled from "@emotion/styled";
+import {
+  FieldValues,
+  UseFormRegister,
+  UseFormRegisterReturn,
+} from "react-hook-form";
 
 export const InputStyle = styled.input`
   width: 996px;
@@ -13,7 +18,14 @@ export const InputStyle = styled.input`
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; */
 `;
 
-export default function WriteInput(props) {
+interface IWriteInputProps {
+  type: string;
+  placeholder: string;
+  register: UseFormRegisterReturn;
+  defaultValue: string | number | string[];
+}
+
+export default function WriteInput(props: IWriteInputProps) {
   return (
     <>
       <InputStyle

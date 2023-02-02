@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { MouseEvent, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   isActiveLoginBoxState,
   isActiveLoginState,
@@ -26,14 +26,13 @@ export default function LayoutHeader() {
   const [isActiveLogin, setIsActiveLogin] = useRecoilState(isActiveLoginState);
   const [isActiveSignUp, setIsActiveSignUp] =
     useRecoilState(isActiveSignUpState);
-  const [visitedProduct, setVisitedProduct] =
-    useRecoilState(visitedProductState);
+  const setVisitedProduct = useSetRecoilState(visitedProductState);
   const [isPointCharging, setIsPointCharging] =
     useRecoilState(isPointChargingState);
-  const [isUpdate, setIsUpdate] = useRecoilState(isUpdateState);
+  const isUpdate = useRecoilValue(isUpdateState);
 
   useEffect(() => {
-    const result = JSON.parse(localStorage.getItem("products"));
+    const result = JSON.parse(String(localStorage.getItem("products")));
     if (result) setVisitedProduct(result);
   }, [isUpdate]);
 
@@ -73,7 +72,6 @@ export default function LayoutHeader() {
   };
 
   const onClickLogOut = async () => {
-    // localStorage.removeItem("accessToken");
     await logout();
     router.reload();
   };

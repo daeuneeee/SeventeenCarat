@@ -117,7 +117,11 @@ export default function ProductCommentListUI({
         <></>
       )}
       {data?.fetchUseditemQuestionAnswers.map((answersMap) => (
-        <NestedCommentList el={el} answersMap={answersMap} />
+        <NestedCommentList
+          el={el}
+          answersMap={answersMap}
+          key={answersMap._id}
+        />
       ))}
     </>
   );

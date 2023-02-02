@@ -1,5 +1,6 @@
-import { ChangeEvent, SetStateAction } from "react";
+import React, { ChangeEvent, SetStateAction } from "react";
 import {
+  FieldError,
   FieldValues,
   UseFormHandleSubmit,
   UseFormRegister,
@@ -47,14 +48,9 @@ export interface IProductWriteUIProps {
   onClickUpdate: (data: any) => void;
 }
 
-interface ErrorData {
-  message: string;
-  type: string;
-}
-
 interface IError {
-  name?: ErrorData;
-  remarks?: ErrorData;
-  contents?: ErrorData;
-  price?: ErrorData;
+  name?: FieldError;
+  remarks?: FieldError;
+  contents?: FieldError;
+  price?: FieldError;
 }

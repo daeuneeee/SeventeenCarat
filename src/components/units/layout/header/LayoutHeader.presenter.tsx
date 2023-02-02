@@ -1,4 +1,4 @@
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { accessTokenState } from "../../../../commons/store";
 import PointChargingPage from "../../../commons/pointCharging";
 import CaratSvg from "../../../commons/svg/carat";
@@ -22,7 +22,8 @@ export default function LayoutHeaderUI({
   onClickPoint,
   isPointCharging,
 }: ILayoutHeaderUIProps) {
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const accessToken = useRecoilValue(accessTokenState);
+  console.log(isActive);
   return (
     <>
       {accessToken ? (
