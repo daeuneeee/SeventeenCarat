@@ -17,3 +17,9 @@ export const PICKED_ITEM_LIST = gql`
     }
   }
 `;
+
+export const COUNT_I_PICKED = gql`
+  query fetchUseditemsCountIPicked {
+    fetchUseditemsCountIPicked
+  }
+`;

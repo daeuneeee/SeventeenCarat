@@ -1,7 +1,7 @@
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { imgState } from "../src/commons/store";
 
 const boxRotate = keyframes`
@@ -18,6 +18,13 @@ const boxRotate = keyframes`
 
 const ImgDiv = styled.div`
   height: 100%;
+  display: flex;
+  justify-content: center;
+  & > div {
+    font-size: 16px;
+    color: #999;
+    padding-top: 60px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -48,7 +55,7 @@ const SvtImg = styled.img`
 `;
 
 export default function Home() {
-  const [imgData, setImgData] = useRecoilState(imgState);
+  const imgData = useRecoilValue(imgState);
 
   const [isActiveLanding, setIsActiveLanding] = useState(true);
 
@@ -60,7 +67,6 @@ export default function Home() {
 
   return (
     <>
-      <ImgDiv></ImgDiv>
       {isActiveLanding && (
         <Wrapper>
           <LogoDiv>
@@ -68,7 +74,13 @@ export default function Home() {
           </LogoDiv>
         </Wrapper>
       )}
-      <SvtImg src={imgData} id="1" />
+      {imgData ? (
+        <SvtImg src={imgData} id="1" />
+      ) : (
+        <ImgDiv>
+          <div>멤버 얼굴을 클릭해주세요!</div>
+        </ImgDiv>
+      )}
     </>
   );
 }

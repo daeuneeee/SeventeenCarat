@@ -17,3 +17,9 @@ export const SOLD_ITEMS = gql`
     }
   }
 `;
+
+export const COUNT_I_SOLD = gql`
+  query fetchUseditemsCountISold {
+    fetchUseditemsCountISold
+  }
+`;

@@ -108,5 +108,6 @@ export const PriceIcon = styled.span`
 export const Price = styled.span`
   font-size: 2rem;
 `;
-// export const ListBox = styled.div``
-// export const ListBox = styled.div``
+export const Footer = styled.div`
+  margin-top: 40px;
+`;

@@ -17,3 +17,9 @@ export const BOUGHT_ITEMS = gql`
     }
   }
 `;
+
+export const COUNT_I_BOUGHT = gql`
+  query fetchUseditemsCountIBought {
+    fetchUseditemsCountIBought
+  }
+`;

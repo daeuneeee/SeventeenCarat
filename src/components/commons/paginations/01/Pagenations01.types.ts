@@ -7,9 +7,7 @@ import {
 
 export interface IPaginations01Props {
   count?: number;
-  refetch: (
-    variables: Partial<IQueryFetchBoardsArgs>
-  ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoards">>>;
+  refetch: (variables: Partial<any>) => Promise<ApolloQueryResult<any>>;
 }
 
 export interface IPaginations01UIProps {

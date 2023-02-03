@@ -1,8 +1,9 @@
+import Paginations01 from "../../../commons/paginations/01/Pagenations01.container";
 import PickTrueSvg from "../../../commons/svg/picktrue";
 import * as S from "../myPageStyles";
 import { IBoughtUIProps } from "./BoughtPage.types";
 
-export default function BoughtUI({ data }: IBoughtUIProps) {
+export default function BoughtUI({ data, refetch, count }: IBoughtUIProps) {
   return (
     <>
       <S.Wrapper>
@@ -49,6 +50,9 @@ export default function BoughtUI({ data }: IBoughtUIProps) {
             </S.InformAndPriceBox>
           </S.ListBox>
         ))}
+        <S.Footer>
+          <Paginations01 refetch={refetch} count={count} />
+        </S.Footer>
       </S.Wrapper>
     </>
   );

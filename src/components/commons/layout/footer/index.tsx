@@ -6,6 +6,7 @@ const Section = styled.section`
   display: flex;
   justify-content: center;
   border-top: 1px solid #d2d2d2;
+  margin-top: 100px;
 `;
 
 const Wrapper = styled.section`

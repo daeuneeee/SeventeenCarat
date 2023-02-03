@@ -1,8 +1,9 @@
+import Paginations01 from "../../../commons/paginations/01/Pagenations01.container";
 import PickTrueSvg from "../../../commons/svg/picktrue";
 import * as S from "../myPageStyles";
 import { IUploadUIProps } from "./UploadPage.types";
 
-export default function UploadUI({ data }: IUploadUIProps) {
+export default function UploadUI({ data, refetch, count }: IUploadUIProps) {
   return (
     <>
       <S.Wrapper>
@@ -49,6 +50,9 @@ export default function UploadUI({ data }: IUploadUIProps) {
             </S.InformAndPriceBox>
           </S.ListBox>
         ))}
+        <S.Footer>
+          <Paginations01 refetch={refetch} count={count} />
+        </S.Footer>
       </S.Wrapper>
     </>
   );
