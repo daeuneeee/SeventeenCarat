@@ -42,8 +42,8 @@ export default function Layout(props: ILayoutProps) {
   const isShowNavigationSub = SHOW_NAVIGATIONSUBS.includes(router.asPath);
 
   const onClickCancel = (event: MouseEvent<HTMLDivElement>) => {
-    if (event.target.className.baseVal !== "carat") setIsActive(false);
-    console.log(event.currentTarget.className);
+    const target = event.target as HTMLDivElement;
+    if (target.id !== "carat") setIsActive(false);
   };
 
   return (

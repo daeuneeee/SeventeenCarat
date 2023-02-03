@@ -26,7 +26,6 @@ export default function NestedCommentWrite({ el }: INestedCommentWriteProps) {
       ],
     });
     setIsNestedComment((prev) => !prev);
-    console.log(result);
   };
 
   const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {

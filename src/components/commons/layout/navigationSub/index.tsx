@@ -56,5 +56,6 @@ export const List = styled.h1`
   :hover {
     background-color: #f8cacc;
     border-radius: 20px;
+    color: white;
   }
 `;

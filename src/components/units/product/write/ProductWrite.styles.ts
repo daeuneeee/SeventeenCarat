@@ -35,19 +35,6 @@ export const InputBox = styled.div`
   margin-bottom: 40px;
 `;
 
-// export const Input = styled.input`
-//   width: 996px;
-//   height: 52px;
-//   padding: 10px;
-//   outline-color: #8da4d0;
-//   margin-top: 10px;
-//   border: 1px solid rgb(248, 202, 204);
-//   font-size: 1.6rem;
-//   border-radius: 5px;
-//   /* box-shadow: rgba(248, 202, 204, 0.15) 0px 6px 12px -2px,
-//     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; */
-// `;
-
 export const Error = styled.div`
   color: red;
   font-size: 13px;
@@ -66,7 +53,6 @@ export const SmartEditorBox = styled(ReactQuill)`
   :focus-within {
     border: 2px solid #8da4d0;
   }
-  /* display: none; */
   & .ql-snow {
     border: none;
   }
@@ -181,28 +167,11 @@ export const Img = styled.label`
   cursor: pointer;
 `;
 
-export const MainImgBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 80px;
-`;
-
-export const RadioBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-`;
-
 export const RegisterDiv = styled.div`
   display: flex;
   justify-content: center;
   gap: 100px;
-`;
-
-export const RadioInputDiv = styled.div`
-  font-size: 1.6rem;
-  display: flex;
-  gap: 3px;
+  margin-top: 80px;
 `;
 
 export const Register = styled.button`

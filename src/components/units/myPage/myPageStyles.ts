@@ -61,6 +61,7 @@ export const InformBoxBottom = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-end;
+  gap: 1rem;
 `;
 
 export const Name = styled.span`
@@ -80,12 +81,6 @@ export const Tags = styled.span`
 export const SellerBox = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-export const SellerImg = styled.div`
-  width: 20px;
-  height: 20px;
-  border: 1px solid green;
 `;
 
 export const SellerName = styled.span`

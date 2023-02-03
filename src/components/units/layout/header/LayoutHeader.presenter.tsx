@@ -23,7 +23,6 @@ export default function LayoutHeaderUI({
   isPointCharging,
 }: ILayoutHeaderUIProps) {
   const accessToken = useRecoilValue(accessTokenState);
-  console.log(isActive);
   return (
     <>
       {accessToken ? (

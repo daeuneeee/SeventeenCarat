@@ -7,7 +7,7 @@ import BoughtUI from "./BoughtPage.presenter";
 import { BOUGHT_ITEMS } from "./BoughtPage.queries";
 
 export default function Bought() {
-  const { data } = useQuery<
+  const { data, refetch } = useQuery<
     Pick<IQuery, "fetchUseditemsIBought">,
     IQueryFetchUseditemsIBoughtArgs
   >(BOUGHT_ITEMS, {

@@ -19,7 +19,7 @@ export const InputStyle = styled.input`
 `;
 
 interface IWriteInputProps {
-  type: string;
+  type?: string;
   placeholder: string;
   register: UseFormRegisterReturn;
   defaultValue: string | number | string[];

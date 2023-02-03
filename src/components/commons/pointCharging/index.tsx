@@ -63,7 +63,6 @@ export default function PointChargingPage() {
       },
       async function (rsp: any) {
         // callback
-        console.log(rsp);
         if (rsp.success) {
           await chargePoint({
             variables: {

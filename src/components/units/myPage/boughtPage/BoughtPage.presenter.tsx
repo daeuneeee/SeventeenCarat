@@ -1,5 +1,5 @@
 import PickTrueSvg from "../../../commons/svg/picktrue";
-import * as S from "../../../../commons/styles/myPageStyles";
+import * as S from "../myPageStyles";
 import { IBoughtUIProps } from "./BoughtPage.types";
 
 export default function BoughtUI({ data }: IBoughtUIProps) {
@@ -17,6 +17,7 @@ export default function BoughtUI({ data }: IBoughtUIProps) {
                   ),
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center center",
+                backgroundSize: "cover",
               }}
             ></S.ImgBox>
             <S.InformAndPriceBox>
@@ -28,7 +29,6 @@ export default function BoughtUI({ data }: IBoughtUIProps) {
                 </S.InformBoxTop>
                 <S.InformBoxBottom>
                   <S.SellerBox>
-                    <S.SellerImg></S.SellerImg>
                     <S.SellerName>{boughtItemsMap.seller?.name}</S.SellerName>
                   </S.SellerBox>
                   <S.PickCountBox>

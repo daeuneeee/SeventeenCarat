@@ -161,11 +161,6 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             )}
           </S.UploadDiv>
         </S.ImgBox>
-        <S.Label>메인 설정</S.Label>
-        <S.Select type="radio" name="select" value="youtube" />
-        유튜브
-        <S.Select type="radio" name="select" value="image" />
-        사진
         <S.RegisterDiv>
           <S.Register
             onClick={props.isEdit ? props.onClickUpdate : props.onClickRegister}

@@ -62,7 +62,6 @@ export default function LayoutNavigationPage() {
 
   async function getImage(event: MouseEvent<HTMLImageElement>) {
     const url = `https://backend.brian-hong.tech/image?api_key=${API_KEY}&name=${event.currentTarget.id}`;
-    console.log(url);
     const result = await axios.get(url);
     setImgData(result.data.img);
   }

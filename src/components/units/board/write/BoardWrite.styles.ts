@@ -198,6 +198,7 @@ export const RegisterDiv = styled.div`
   display: flex;
   justify-content: center;
   gap: 100px;
+  margin-top: 80px;
 `;
 
 export const Register = styled.button`

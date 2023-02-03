@@ -13,8 +13,6 @@ export default function VisitedProducts() {
     await router.push(`/products/${event.currentTarget.id}`);
   };
 
-  console.log(visitedProduct);
-
   return (
     <>
       {visitedProduct.length !== 0 ? (

@@ -199,17 +199,6 @@ export const BodyTitle = styled.input`
   }
 `;
 
-// export const BodyDateBox = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   justify-content: center;
-//   border: 1px solid #8da4d0;
-//   text-align: center;
-//   width: 20%;
-//   border-radius: 5px;
-// `;
-
 export const BodyDate = styled.input`
   width: 100%;
   height: 30px;
@@ -238,11 +227,9 @@ export const BodySearch = styled.button`
 `;
 
 export const BodyListBox = styled.div`
-  /* border-top: 1px solid #8da4d0; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  /* justify-content: space-between; */
   gap: 16px;
 `;
 
@@ -257,7 +244,6 @@ export const Footer = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 60px;
-  /* border-top: 1px solid #8da4d0; */
   padding-top: 40px;
   width: 100%;
   justify-content: space-between;
@@ -292,4 +278,12 @@ export const RegisterBtn = styled.button`
       fill: white;
     }
   }
+`;
+
+export const BodyBox = styled.div`
+  width: 1200px;
+  height: 800px;
+  overflow: auto;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 `;

@@ -96,17 +96,14 @@ export default function ProductListUI({
         </S.Header>
         <S.Body>
           <S.BodyTop>
-            <S.BodySell>
-              <span>판매중인상품</span>
-              <span>판매된상품</span>
-            </S.BodySell>
+            <S.BodySell></S.BodySell>
             <S.BodyTitle
               placeholder="제목을 검색해주세요."
               onChange={onChangeSearch}
             />
             <S.BodySearch onClick={onClickSearch}>검색하기</S.BodySearch>
           </S.BodyTop>
-          <div style={{ width: "1220px", height: "800px", overflow: "auto" }}>
+          <S.BodyBox>
             <InfiniteScroll
               pageStart={0}
               useWindow={false}
@@ -119,7 +116,7 @@ export default function ProductListUI({
                 ))}
               </S.BodyListBox>
             </InfiniteScroll>
-          </div>
+          </S.BodyBox>
         </S.Body>
         <S.Footer>
           <S.EmptyBox></S.EmptyBox>

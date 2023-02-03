@@ -67,7 +67,6 @@ export default function ProductWriteUI({
             <WriteInput
               placeholder="가격을 입력해주세요."
               register={register("price")}
-              type="number"
               defaultValue={data?.fetchUseditem.price || ""}
             />
             <S.Error>{errors.price?.message}</S.Error>
@@ -75,7 +74,7 @@ export default function ProductWriteUI({
           <S.InputBox>
             <S.Label>태그입력</S.Label>
             <WriteInput
-              placeholder="태그를 입력해주세요."
+              placeholder={`태그를 입력해주세요 (","로 구분해주세요).`}
               type="text"
               register={register("tags")}
               defaultValue={data?.fetchUseditem.tags || ""}
@@ -206,17 +205,6 @@ export default function ProductWriteUI({
               id="img04"
             />
           </S.ImgBox>
-          <S.MainImgBox>
-            <S.Label>메인 사진 설정</S.Label>
-            <S.RadioBox>
-              <S.RadioInputDiv>
-                <input type="radio" name="select" value="photo1" /> 사진1
-              </S.RadioInputDiv>
-              <S.RadioInputDiv>
-                <input type="radio" name="select" value="photo2" /> 사진2
-              </S.RadioInputDiv>
-            </S.RadioBox>
-          </S.MainImgBox>
         </S.Footer>
         <S.RegisterDiv>
           <S.Register

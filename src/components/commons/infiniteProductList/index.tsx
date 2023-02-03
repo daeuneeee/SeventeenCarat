@@ -58,17 +58,19 @@ export default function InfiniteProduct({ el }: { el: IUseditem }) {
         ) : (
           <Link href={`products/${el._id}`}>
             <BodyList>
-              <TextBox className="TextBox">
-                <Text>{el.name}</Text>
-                <Text>{el.remarks}</Text>
-                <Text>
-                  ₩
-                  {`${String(el.price).replace(
-                    /(\d)(?=(?:\d{3})+(?!\d))/g,
-                    "$1,"
-                  )}${" "}`}
-                </Text>
-              </TextBox>
+              <DivBox className="DivBox">
+                <TextBox className="TextBox">
+                  <Text>{el.name}</Text>
+                  <Text>{el.remarks}</Text>
+                  <Text>
+                    ₩
+                    {`${String(el.price).replace(
+                      /(\d)(?=(?:\d{3})+(?!\d))/g,
+                      "$1,"
+                    )}${" "}`}
+                  </Text>
+                </TextBox>
+              </DivBox>
             </BodyList>
           </Link>
         )}
@@ -103,6 +105,7 @@ const BodyList = styled.div`
   font-size: 20px;
   position: relative;
   opacity: 1;
+  border-radius: 20px;
 `;
 
 const DivBox = styled.div`

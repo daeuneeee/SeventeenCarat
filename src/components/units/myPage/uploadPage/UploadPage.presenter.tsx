@@ -1,5 +1,5 @@
 import PickTrueSvg from "../../../commons/svg/picktrue";
-import * as S from "../../../../commons/styles/myPageStyles";
+import * as S from "../myPageStyles";
 import { IUploadUIProps } from "./UploadPage.types";
 
 export default function UploadUI({ data }: IUploadUIProps) {
@@ -17,6 +17,7 @@ export default function UploadUI({ data }: IUploadUIProps) {
                   ),
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center center",
+                backgroundSize: "cover",
               }}
             ></S.ImgBox>
             <S.InformAndPriceBox>
@@ -28,7 +29,6 @@ export default function UploadUI({ data }: IUploadUIProps) {
                 </S.InformBoxTop>
                 <S.InformBoxBottom>
                   <S.SellerBox>
-                    <S.SellerImg></S.SellerImg>
                     <S.SellerName>{SoldItemsMap.seller?.name}</S.SellerName>
                   </S.SellerBox>
                   <S.PickCountBox>

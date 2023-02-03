@@ -9,7 +9,6 @@ import styled from "@emotion/styled";
 import Paginations01 from "../../../commons/paginations/01/Pagenations01.container";
 import { v4 as uuidV4 } from "uuid";
 import { IBoard } from "../../../../commons/types/generated/types";
-import VisitedProducts from "../../../commons/vistedProducts";
 
 const { RangePicker } = DatePicker;
 

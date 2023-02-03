@@ -15,6 +15,7 @@ import { Modal } from "antd";
 import {
   IMutation,
   IMutationUploadFileArgs,
+  IQuery,
 } from "../../../../commons/types/generated/types";
 import { FETCH_USED_ITEM } from "../detail/ProductDetail.queries";
 import { IAddress, IData, IProductWriteProps } from "./ProductWrite.types";
@@ -31,7 +32,7 @@ const schema = yup.object({
 
 export default function ProductWrite(props: IProductWriteProps) {
   const router = useRouter();
-  const { data } = useQuery(FETCH_USED_ITEM, {
+  const { data } = useQuery<Pick<IQuery, "fetchUseditem">>(FETCH_USED_ITEM, {
     variables: { useditemId: router.query.productId },
   });
   const [isOpen, setIsOpen] = useState(false);
@@ -63,19 +64,19 @@ export default function ProductWrite(props: IProductWriteProps) {
     setValue("tags", data?.fetchUseditem.tags);
     setValue(
       "useditemAddress.addressDetail",
-      data?.fetchUseditem.useditemAddress.addressDetail
+      data?.fetchUseditem.useditemAddress?.addressDetail
     );
     setValue(
       "useditemAddress.address",
-      data?.fetchUseditem.useditemAddress.address
+      data?.fetchUseditem.useditemAddress?.address
     );
 
     setValue(
       "useditemAddress.zipcode",
-      data?.fetchUseditem.useditemAddress.zipcode
+      data?.fetchUseditem.useditemAddress?.zipcode
     );
 
-    setEditImageUrls(data?.fetchUseditem.images);
+    if (data?.fetchUseditem.images) setEditImageUrls(data.fetchUseditem.images);
   }, [data]);
   const [createUsedItem] =
     useMutation<Pick<IMutation, "createUseditem">>(CREATE_USED_ITEM);
@@ -99,7 +100,6 @@ export default function ProductWrite(props: IProductWriteProps) {
   };
 
   const onClickRegister = async (data: IData) => {
-    console.log(data);
     try {
       const results = await Promise.all(
         files.map((el) => el && uploadFile({ variables: { file: el } }))
@@ -109,8 +109,7 @@ export default function ProductWrite(props: IProductWriteProps) {
       );
       data.price = Number(data.price);
       data.images = resultUrls;
-      data.tags = data.tags.split("#");
-      data.tags.shift();
+      data.tags = data.tags.split(",");
 
       const result = await createUsedItem({
         variables: {
@@ -146,8 +145,7 @@ export default function ProductWrite(props: IProductWriteProps) {
 
       data.images = updateDatas;
       data.price = Number(data.price);
-      data.tags = data.tags.split("#");
-      console.log(data);
+      data.tags = data.tags.split(",");
 
       const result = await updateUsedItem({
         variables: {
@@ -200,8 +198,6 @@ export default function ProductWrite(props: IProductWriteProps) {
         setFiles(tempFiles);
       };
     };
-
-  console.log(errors);
 
   return (
     <ProductWriteUI
