@@ -59,6 +59,11 @@ export default function BoardDetail() {
   const onClickDelete = async () => {
     await deleteBoard({
       variables: { boardId: router.query.boardId },
+      update(cache) {
+        cache.modify({
+          fields: () => {},
+        });
+      },
     });
     await router.push(`/boards`);
     Modal.success({ content: "게시글 삭제가 완료되었습니다." });

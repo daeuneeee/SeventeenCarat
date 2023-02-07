@@ -134,6 +134,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
             images: [imgUrl1, imgUrl2, imgUrl3],
           },
         },
+        update(cache) {
+          cache.modify({
+            fields: () => {},
+          });
+        },
       });
       Modal.success({ content: "게시글 등록이 완료되었습니다." });
       if (typeof result.data?.createBoard._id === "string") {
@@ -151,31 +156,43 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   const onClickUpdate = async () => {
-    const myVariables: IMyVariablesProps = {
-      boardId: String(router.query.boardId),
-      password: "",
-      updateBoardInput: {},
-    };
-    if (zipCode || address || addressDetail) {
-      myVariables.updateBoardInput.boardAddress = {};
-      if (zipCode) myVariables.updateBoardInput.boardAddress.zipcode = zipCode;
-      if (address) myVariables.updateBoardInput.boardAddress.address = address;
-      if (addressDetail)
-        myVariables.updateBoardInput.boardAddress.addressDetail = addressDetail;
-    }
-    if (password) myVariables.password = password;
-    if (title) myVariables.updateBoardInput.title = title;
-    if (contents) myVariables.updateBoardInput.contents = contents;
-    if (youtube) myVariables.updateBoardInput.youtubeUrl = youtube;
-    if (imgUrl1 || imgUrl2 || imgUrl3)
-      myVariables.updateBoardInput.images = [imgUrl1, imgUrl2, imgUrl3];
+    try {
+      const myVariables: IMyVariablesProps = {
+        boardId: String(router.query.boardId),
+        password: "",
+        updateBoardInput: {},
+      };
+      if (zipCode || address || addressDetail) {
+        myVariables.updateBoardInput.boardAddress = {};
+        if (zipCode)
+          myVariables.updateBoardInput.boardAddress.zipcode = zipCode;
+        if (address)
+          myVariables.updateBoardInput.boardAddress.address = address;
+        if (addressDetail)
+          myVariables.updateBoardInput.boardAddress.addressDetail =
+            addressDetail;
+      }
+      if (password) myVariables.password = password;
+      if (title) myVariables.updateBoardInput.title = title;
+      if (contents) myVariables.updateBoardInput.contents = contents;
+      if (youtube) myVariables.updateBoardInput.youtubeUrl = youtube;
+      if (imgUrl1 || imgUrl2 || imgUrl3)
+        myVariables.updateBoardInput.images = [imgUrl1, imgUrl2, imgUrl3];
 
-    await updateBoard({
-      variables: myVariables,
-    });
-    Modal.success({ content: "정상적으로 수정되었습니다." });
-    if (typeof router.query.boardId === "string") {
-      await router.push(`/boards/${router.query.boardId}`);
+      await updateBoard({
+        variables: myVariables,
+        update(cache) {
+          cache.modify({
+            fields: () => {},
+          });
+        },
+      });
+      Modal.success({ content: "정상적으로 수정되었습니다." });
+      if (typeof router.query.boardId === "string") {
+        await router.push(`/boards/${router.query.boardId}`);
+      }
+    } catch (error) {
+      Modal.error({ content: "비밀번호를 확인해주세요." });
     }
   };
 
