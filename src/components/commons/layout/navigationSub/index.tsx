@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import myPage from "../../../../../pages/myPage";
 
 export default function LayoutNavigationSubPage() {
   const router = useRouter();
+
+  const [clickedCategory, setClickedCategory] = useState("/uploadPage");
 
   const NavigationSubList = [
     { id: "/uploadPage", name: "업로드한 상품" },
@@ -12,8 +14,13 @@ export default function LayoutNavigationSubPage() {
     { id: "/pickedPage", name: "찜한 상품" },
   ];
 
-  const onClickLink = (event: MouseEvent<HTMLHeadingElement>) => {
+  useEffect(() => {
+    router.push(`/myPage/uploadPage`);
+  }, []);
+
+  const onClickLink = (event: MouseEvent<HTMLButtonElement>) => {
     void router.push(`/myPage${event.currentTarget.id}`);
+    setClickedCategory(event.currentTarget.id);
   };
 
   return (
@@ -21,7 +28,13 @@ export default function LayoutNavigationSubPage() {
       <Wrapper>
         <ListBox>
           {NavigationSubList.map((list, index) => (
-            <List key={index} id={list.id} onClick={onClickLink}>
+            <List
+              key={index}
+              id={list.id}
+              onClick={onClickLink}
+              value={index}
+              className={clickedCategory === list.id ? "on" : ""}
+            >
               {list.name}
             </List>
           ))}
@@ -49,10 +62,18 @@ export const ListBox = styled.div`
   border-bottom: 2px solid transparent;
   border-image: linear-gradient(to right, #f8cacc, #8da4d0) 1;
 `;
-export const List = styled.h1`
+export const List = styled.button`
   padding: 10px 10px;
   margin: 0;
+  border: none;
+  font-size: 18px;
+  background-color: transparent;
   cursor: pointer;
+  &.on {
+    background-color: #f8cacc;
+    border-radius: 20px;
+    color: white;
+  }
   :hover {
     background-color: #f8cacc;
     border-radius: 20px;

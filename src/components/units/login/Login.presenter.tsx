@@ -37,12 +37,6 @@ export default function LoginUI({
               <S.Error>{errors.password?.message}</S.Error>
             </S.Label>
           </S.InputDiv>
-          <S.CheckBoxDiv>
-            <S.AutoLogin className="login" type="checkbox" id="checked" />
-            <label htmlFor="checked">
-              <em></em>자동로그인
-            </label>
-          </S.CheckBoxDiv>
           <LoginSignUpButton title="로그인"></LoginSignUpButton>
           <S.LoginOpt>
             <S.SignFind onClick={onClickSignUp}>회원가입</S.SignFind>
