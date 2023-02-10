@@ -151,10 +151,14 @@ export default function BoardDetailUI({
         loadMore={onLoadMore}
         hasMore={true || false}
       >
-        {comments?.fetchBoardComments.map(
-          (el: IBoardComment, index: number) => {
-            return <BoardCommentList key={el._id} el={el} index={index} />;
-          }
+        {comments ? (
+          comments?.fetchBoardComments.map(
+            (el: IBoardComment, index: number) => {
+              return <BoardCommentList key={el._id} el={el} index={index} />;
+            }
+          )
+        ) : (
+          <></>
         )}
       </InfiniteScroll>
     </>

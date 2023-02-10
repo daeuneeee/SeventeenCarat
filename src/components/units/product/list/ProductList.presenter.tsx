@@ -111,9 +111,13 @@ export default function ProductListUI({
               hasMore={true || false}
             >
               <S.BodyListBox>
-                {data?.fetchUseditems.map((el) => (
-                  <InfiniteProduct key={uuidV4()} el={el} />
-                ))}
+                {data ? (
+                  data?.fetchUseditems.map((el) => (
+                    <InfiniteProduct key={uuidV4()} el={el} />
+                  ))
+                ) : (
+                  <></>
+                )}
               </S.BodyListBox>
             </InfiniteScroll>
           </S.BodyBox>

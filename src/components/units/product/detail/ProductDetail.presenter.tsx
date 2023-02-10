@@ -166,7 +166,7 @@ export default function ProductDetailUI({
           {sellerID === loggedInId ? (
             <>
               <S.Update onClick={onClickUpdate}>수정하기</S.Update>
-              <S.Delete onClick={onClickDelete}>삭제하기</S.Delete>{" "}
+              <S.Delete onClick={onClickDelete}>삭제하기</S.Delete>
             </>
           ) : (
             <S.Buy onClick={onClickBuying}>구매하기</S.Buy>

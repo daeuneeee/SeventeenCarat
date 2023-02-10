@@ -106,10 +106,7 @@ export default function ProductDetail() {
         variables: { useritemId: router.query.productId },
         update(cache) {
           cache.modify({
-            fields: {
-              fetchUseditems: () => {},
-              fetchUserLoggedIn: () => {},
-            },
+            fields: () => {},
           });
         },
       });
@@ -138,6 +135,7 @@ export default function ProductDetail() {
             fetchUseditemQuestions: [...prev.fetchUseditemQuestions],
           };
         }
+        console.log(prev);
         return {
           fetchUseditemQuestions: [
             ...prev.fetchUseditemQuestions,

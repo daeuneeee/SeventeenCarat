@@ -6,7 +6,7 @@ export default function myPage() {
   useAuth();
   const router = useRouter();
   useEffect(() => {
-    router.push("/myPage/uploadPage");
+    router.push("/myPage/boughtPage");
   }, []);
 
   return <></>;

@@ -18,7 +18,7 @@ export default function BoardCommentList({
   index,
 }: IBoardCommentListProps) {
   const router = useRouter();
-  const [password, setPassword] = useState("");
+  const [, setPassword] = useState("");
   const [commentId, setCommentId] = useState("");
   const [editPassword, setEditPassword] = useState("");
   const [editContents, setEditContents] = useState("");

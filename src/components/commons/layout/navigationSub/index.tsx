@@ -6,16 +6,16 @@ import myPage from "../../../../../pages/myPage";
 export default function LayoutNavigationSubPage() {
   const router = useRouter();
 
-  const [clickedCategory, setClickedCategory] = useState("/uploadPage");
+  const [clickedCategory, setClickedCategory] = useState("/boughtPage");
 
   const NavigationSubList = [
-    { id: "/uploadPage", name: "업로드한 상품" },
     { id: "/boughtPage", name: "구매한 상품" },
+    { id: "/uploadPage", name: "업로드한 상품" },
     { id: "/pickedPage", name: "찜한 상품" },
   ];
 
   useEffect(() => {
-    router.push(`/myPage/uploadPage`);
+    router.push(`/myPage/boughtPage`);
   }, []);
 
   const onClickLink = (event: MouseEvent<HTMLButtonElement>) => {
@@ -32,7 +32,6 @@ export default function LayoutNavigationSubPage() {
               key={index}
               id={list.id}
               onClick={onClickLink}
-              value={index}
               className={clickedCategory === list.id ? "on" : ""}
             >
               {list.name}
