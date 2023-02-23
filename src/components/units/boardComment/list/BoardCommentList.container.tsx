@@ -73,14 +73,9 @@ export default function BoardCommentList({
       }
       await updateBoardComment({
         variables: myVariables,
-        refetchQueries: [
-          {
-            query: FETCH_BOARD_COMMENTS,
-            variables: {
-              boardId: router.query.boardId,
-            },
-          },
-        ],
+        update(cache) {
+          cache.modify({ fields: () => {} });
+        },
       });
       setEditPassword("");
       setIsEdit((prev) => !prev);

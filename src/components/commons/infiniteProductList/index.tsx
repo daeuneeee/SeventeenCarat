@@ -59,6 +59,7 @@ export default function InfiniteProduct({ el }: { el: IUseditem }) {
           <Link href={`products/${el._id}`}>
             <BodyList>
               <DivBox className="DivBox">
+                <Span>NO IMAGE</Span>
                 <TextBox className="TextBox">
                   <Text>{el.name}</Text>
                   <Text>{el.remarks}</Text>
@@ -117,6 +118,11 @@ const DivBox = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 20px;
+  &:hover {
+    span {
+      color: transparent;
+    }
+  }
 `;
 
 const TextBox = styled.div`
@@ -136,4 +142,12 @@ const Text = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`;
+
+const Span = styled.span`
+  font-size: 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;

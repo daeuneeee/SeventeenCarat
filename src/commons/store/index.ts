@@ -1,56 +1,57 @@
 import { atom } from "recoil";
+import { v4 } from "uuid";
 
 export const isActiveLoginState = atom({
-  key: "isActiveLoginState",
+  key: "isActiveLoginState" + v4(),
   default: false,
 });
 
 export const isActiveSignUpState = atom({
-  key: "isActiveSignUpState",
+  key: "isActiveSignUpState" + v4(),
   default: false,
 });
 
 export const accessTokenState = atom({
-  key: "accessTokenState",
+  key: "accessTokenState" + v4(),
   default: "",
 });
 
 export const imgState = atom({
-  key: "imgState",
+  key: "imgState" + v4(),
   default: "",
 });
 
 export const isActiveLoginBoxState = atom({
-  key: "isActiveLoginBoxState",
+  key: "isActiveLoginBoxState" + v4(),
   default: false,
 });
 
 export const mapLatLngState = atom({
-  key: "mapLatLngState",
+  key: "mapLatLngState" + v4(),
   default: "",
 });
 
 export const visitedProductState = atom({
-  key: "visitedProductState",
+  key: "visitedProductState" + v4(),
   default: [],
 });
 
 export const isPointChargingState = atom({
-  key: "ispointChargingState",
+  key: "isPointChargingState" + v4(),
   default: false,
 });
 
 export const isNestedCommentState = atom({
-  key: "isNestedCommentState",
+  key: "isNestedCommentState" + v4(),
   default: false,
 });
 
 export const isWriteStage = atom({
-  key: "isWriteStage",
+  key: "isWriteStage" + v4(),
   default: false,
 });
 
 export const isUpdateState = atom({
-  key: "isUpdateState",
+  key: "isUpdateState" + v4(),
   default: 0,
 });
