@@ -87,11 +87,6 @@ export default function BoardListUI({
             placeholder="제목을 검색해주세요."
             onChange={onChangeSearch}
           />
-          <S.BodyDateBox>
-            <Space direction="vertical" size={12}>
-              <RangePickerStyle />
-            </Space>
-          </S.BodyDateBox>
           <S.BodySearch onClick={onClickSearch}>검색하기</S.BodySearch>
         </S.BodyTop>
         <S.BodyListBox>

@@ -149,7 +149,7 @@ export const BodyTop = styled.div`
   flex-direction: row;
   height: 52px;
   gap: 40px;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 40px;
   &::after {
     position: absolute;
@@ -159,15 +159,16 @@ export const BodyTop = styled.div`
     width: 18px;
     height: 18px;
     background-size: cover;
-    left: 15px;
-    top: 15px;
+    right: 456px;
+    top: 17px;
   }
 `;
 
 export const BodyTitle = styled.input`
+  position: relative;
   border: none;
   padding-left: 50px;
-  width: 64.66%;
+  width: 30%;
   background-color: #f8cacc;
   border-radius: 10px;
   outline: none;
@@ -178,24 +179,6 @@ export const BodyTitle = styled.input`
     color: white;
   }
 `;
-
-export const BodyDateBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #8da4d0;
-  text-align: center;
-  width: 18.33%;
-  border-radius: 5px;
-`;
-
-// export const RangePickerStyle = styled(RangePicker)`
-//   border: none;
-//   :focus {
-//     box-shadow: none;
-//   }
-// `;
 
 export const BodyDate = styled.input`
   width: 100%;
